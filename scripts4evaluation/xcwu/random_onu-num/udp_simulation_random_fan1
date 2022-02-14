@@ -1,0 +1,94 @@
+echo "SIMULATIONSIMULATION" >simulation-time-random1.txt
+echo "udp-random-26-6" >>simulation-time-random1.txt
+date >>simulation-time-random1.txt
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=26 --dspktinterval=0.002 --uspktinterval=0.008 --astoptime=500 --sstoptime=501" >udp-random-26-6.txt
+date >>simulation-time-random1.txt
+
+echo "SIMULATIONSIMULATION" >>simulation-time-random1.txt
+echo "udp-random-28-12" >>simulation-time-random1.txt
+date >>simulation-time-random1.txt
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=28 --dspktinterval=0.001 --uspktinterval=0.004 --astoptime=500 --sstoptime=501" >udp-random-28-12.txt
+date >>simulation-time-random1.txt
+
+echo "SIMULATIONSIMULATION" >>simulation-time-random1.txt
+echo "udp-random-31-24" >>simulation-time-random1.txt
+date >>simulation-time-random1.txt
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=31 --dspktinterval=0.0005 --uspktinterval=0.002 --astoptime=500 --sstoptime=501" >udp-random-31-24.txt
+date >>simulation-time-random1.txt
+
+echo "SIMULATIONSIMULATION" >>simulation-time-random1.txt
+echo "udp-random-37-48" >>simulation-time-random1.txt
+date >>simulation-time-random1.txt
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=37 --dspktinterval=0.00025 --uspktinterval=0.001 --astoptime=500 --sstoptime=501" >udp-random-37-48.txt
+date >>simulation-time-random1.txt
+
+echo "SIMULATIONSIMULATION" >>simulation-time-random1.txt
+echo "udp-random-40-96" >>simulation-time-random1.txt
+date >>simulation-time-random1.txt
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=40 --dspktinterval=0.000125 --uspktinterval=0.0005 --astoptime=500 --sstoptime=501" >udp-random-40-96.txt
+date >>simulation-time-random1.txt
+
+echo "SIMULATIONSIMULATION" >>simulation-time-random1.txt
+echo "udp-random-45-192" >>simulation-time-random1.txt
+date >>simulation-time-random1.txt
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=45 --dspktinterval=0.0000625 --uspktinterval=0.00025 --astoptime=500 --sstoptime=501" >udp-random-45-192.txt
+date >>simulation-time-random1.txt
+
+
+
+
+
+
+
+echo "SIMULATIONSIMULATION" >>simulation-time-random1.txt
+echo "udp-random-51-3" >>simulation-time-random1.txt
+date >>simulation-time-random1.txt
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=51 --dspktinterval=0.004 --uspktinterval=0.016 --astoptime=500 --sstoptime=501" >udp-random-51-3.txt
+date >>simulation-time-random1.txt
+
+echo "SIMULATIONSIMULATION" >>simulation-time-random1.txt
+echo "udp-random-57-6" >>simulation-time-random1.txt
+date >>simulation-time-random1.txt
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=57 --dspktinterval=0.002 --uspktinterval=0.008 --astoptime=500 --sstoptime=501" >udp-random-57-6.txt
+date >>simulation-time-random1.txt
+
+echo "SIMULATIONSIMULATION" >>simulation-time-random1.txt
+echo "udp-random-62-12" >>simulation-time-random1.txt
+date >>simulation-time-random1.txt
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=62 --dspktinterval=0.001 --uspktinterval=0.004 --astoptime=500 --sstoptime=501" >udp-random-62-12.txt
+date >>simulation-time-random1.txt
+
+echo "SIMULATIONSIMULATION" >>simulation-time-random1.txt
+echo "udp-random-70-24" >>simulation-time-random1.txt
+date >>simulation-time-random1.txt
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=70 --dspktinterval=0.0005 --uspktinterval=0.002 --astoptime=500 --sstoptime=501" >udp-random-70-24.txt
+date >>simulation-time-random1.txt
+
+echo "SIMULATIONSIMULATION" >>simulation-time-random1.txt
+echo "udp-random-77-48" >>simulation-time-random1.txt
+date >>simulation-time-random1.txt
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=77 --dspktinterval=0.00025 --uspktinterval=0.001 --astoptime=500 --sstoptime=501" >udp-random-77-48.txt
+date >>simulation-time-random1.txt
+
+echo "SIMULATIONSIMULATION" >>simulation-time-random1.txt
+echo "udp-random-85-96" >>simulation-time-random1.txt
+date >>simulation-time-random1.txt
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=85 --dspktinterval=0.000125 --uspktinterval=0.0005 --astoptime=500 --sstoptime=501" >udp-random-85-96.txt
+date >>simulation-time-random1.txt
+
+echo "SIMULATIONSIMULATION" >>simulation-time-random1.txt
+echo "udp-random-93-96" >>simulation-time-random1.txt
+date >>simulation-time-random1.txt
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=93 --dspktinterval=0.000125 --uspktinterval=0.0005 --astoptime=500 --sstoptime=501" >udp-random-93-96.txt
+date >>simulation-time-random1.txt
+
+
+
+
+
+
+
+
+
+
+

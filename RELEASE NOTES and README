@@ -1,0 +1,24 @@
+
++++++++++++++++++++++++++++++++++++++++++++++
+RELEASE NOTES of the NS-3 XG-PON module v2.0
++++++++++++++++++++++++++++++++++++++++++++++
+
+VERSION 2.0 
+RELEASE DATE 22.11.2018
+RELEASED BY JEROME A AROKKIAM (jerom2005raj@gmail.com)
+
+This XG-PON module contains significant changes to v1.0 published a while ago. Being a lazy coder as usual, I have not individually given all the changes for all the files and functions changed.
+
+So, the best place to start for a newbie with XG-PON is file xgpon-dba-udp-test.cc, inside the 'xgpon/examples' folder
+>> First you may copy this file to your scratch folder (after installing ns-3 version 3.21)
+>> Then follow the comments and instructions to understand the file and its configuration parameters
+>> And finally run the code the usual ns3 way using waf. Voilà!!!
+
+I dont want to place any restrictions on the usage except that whoever uses this module in ns3 is kind enough to cite the developers' scientific papers (as given in the example and DBA implementation files) as appropriate. Questions and appreciations are most welcome.
+
+Thank you for taking the time to explore this module. My sincere thanks to the ns3 team for their excellent work with the overall ns3 code base.
+
+Peace.
+
+-Jerome
+

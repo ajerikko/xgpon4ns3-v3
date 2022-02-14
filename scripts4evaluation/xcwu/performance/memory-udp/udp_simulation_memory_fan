@@ -1,0 +1,175 @@
+echo "SIMULATIONSIMULATION --- udp-25-6" 
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=25 --dspktinterval=0.002 --uspktinterval=0.008 --astoptime=10000 --sstoptime=10001"  > /dev/null 
+
+echo "SIMULATIONSIMULATION --- udp-25-12" 
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=25 --dspktinterval=0.001 --uspktinterval=0.004 --astoptime=10000 --sstoptime=10001"  > /dev/null 
+
+echo "SIMULATIONSIMULATION --- udp-25-24"
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=25 --dspktinterval=0.0005 --uspktinterval=0.002 --astoptime=10000 --sstoptime=10001"  > /dev/null 
+
+echo "SIMULATIONSIMULATION --- udp-25-48"
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=25 --dspktinterval=0.00025 --uspktinterval=0.001 --astoptime=10000 --sstoptime=10001"  > /dev/null 
+
+echo "SIMULATIONSIMULATION --- udp-25-96"
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=25 --dspktinterval=0.000125 --uspktinterval=0.0005 --astoptime=10000 --sstoptime=10001"  > /dev/null 
+
+echo "SIMULATIONSIMULATION --- udp-25-192"
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=25 --dspktinterval=0.0000625 --uspktinterval=0.00025 --astoptime=10000 --sstoptime=10001"  > /dev/null 
+
+
+
+
+
+echo "SIMULATIONSIMULATION --- udp-50-3" 
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=50 --dspktinterval=0.004 --uspktinterval=0.016 --astoptime=10000 --sstoptime=10001"  > /dev/null
+
+echo "SIMULATIONSIMULATION --- udp-50-6" 
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=50 --dspktinterval=0.002 --uspktinterval=0.008 --astoptime=10000 --sstoptime=10001"  > /dev/null
+
+echo "SIMULATIONSIMULATION --- udp-50-12" 
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=50 --dspktinterval=0.001 --uspktinterval=0.004 --astoptime=10000 --sstoptime=10001"  > /dev/null
+
+echo "SIMULATIONSIMULATION --- udp-50-24" 
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=50 --dspktinterval=0.0005 --uspktinterval=0.002 --astoptime=10000 --sstoptime=10001"  > /dev/null
+
+echo "SIMULATIONSIMULATION --- udp-50-48" 
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=50 --dspktinterval=0.00025 --uspktinterval=0.001 --astoptime=10000 --sstoptime=10001"  > /dev/null
+
+echo "SIMULATIONSIMULATION --- udp-50-96" 
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=50 --dspktinterval=0.000125 --uspktinterval=0.0005 --astoptime=10000 --sstoptime=10001"  > /dev/null
+
+
+
+
+
+echo "SIMULATIONSIMULATION --- udp-100-1.5"
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=100 --dspktinterval=0.008 --uspktinterval=0.032 --astoptime=10000 --sstoptime=10001"  > /dev/null 
+
+echo "SIMULATIONSIMULATION --- udp-100-3"
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=100 --dspktinterval=0.004 --uspktinterval=0.016 --astoptime=10000 --sstoptime=10001"  > /dev/null 
+
+echo "SIMULATIONSIMULATION --- udp-100-6"
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=100 --dspktinterval=0.002 --uspktinterval=0.008 --astoptime=10000 --sstoptime=10001"  > /dev/null 
+
+echo "SIMULATIONSIMULATION --- udp-100-12"
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=100 --dspktinterval=0.001 --uspktinterval=0.004 --astoptime=10000 --sstoptime=10001"  > /dev/null 
+
+echo "SIMULATIONSIMULATION --- udp-100-24"
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=100 --dspktinterval=0.0005 --uspktinterval=0.002 --astoptime=10000 --sstoptime=10001"  > /dev/null
+
+echo "SIMULATIONSIMULATION --- udp-100-48"
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=100 --dspktinterval=0.00025 --uspktinterval=0.001 --astoptime=10000 --sstoptime=10001"  > /dev/null 
+
+
+
+
+
+echo "SIMULATIONSIMULATION --- udp-200-0.75" 
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=200 --dspktinterval=0.016 --uspktinterval=0.064 --astoptime=10000 --sstoptime=10001"  > /dev/null
+
+echo "SIMULATIONSIMULATION --- udp-200-1.5" 
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=200 --dspktinterval=0.008 --uspktinterval=0.032 --astoptime=10000 --sstoptime=10001"  > /dev/null
+
+echo "SIMULATIONSIMULATION --- udp-200-3" 
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=200 --dspktinterval=0.004 --uspktinterval=0.016 --astoptime=10000 --sstoptime=10001"  > /dev/null
+
+echo "SIMULATIONSIMULATION --- udp-200-6" 
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=200 --dspktinterval=0.002 --uspktinterval=0.008 --astoptime=10000 --sstoptime=10001"  > /dev/null
+
+echo "SIMULATIONSIMULATION --- udp-200-12" 
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=200 --dspktinterval=0.001 --uspktinterval=0.004 --astoptime=10000 --sstoptime=10001"  > /dev/null
+
+echo "SIMULATIONSIMULATION --- udp-200-24" 
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=200 --dspktinterval=0.0005 --uspktinterval=0.002 --astoptime=10000 --sstoptime=10001"  > /dev/null
+
+
+
+
+
+echo "SIMULATIONSIMULATION --- udp-400-0.375" 
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=400 --dspktinterval=0.032 --uspktinterval=0.128 --astoptime=10000 --sstoptime=10001"  > /dev/null
+
+echo "SIMULATIONSIMULATION --- udp-400-0.75" 
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=400 --dspktinterval=0.016 --uspktinterval=0.064 --astoptime=10000 --sstoptime=10001"  > /dev/null
+
+echo "SIMULATIONSIMULATION --- udp-400-1.5" 
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=400 --dspktinterval=0.008 --uspktinterval=0.032 --astoptime=10000 --sstoptime=10001"  > /dev/null
+
+echo "SIMULATIONSIMULATION --- udp-400-3" 
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=400 --dspktinterval=0.004 --uspktinterval=0.016 --astoptime=10000 --sstoptime=10001"  > /dev/null
+
+echo "SIMULATIONSIMULATION --- udp-400-6" 
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=400 --dspktinterval=0.002 --uspktinterval=0.008 --astoptime=10000 --sstoptime=10001"  > /dev/null
+
+echo "SIMULATIONSIMULATION --- udp-400-12" 
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=400 --dspktinterval=0.001 --uspktinterval=0.004 --astoptime=10000 --sstoptime=10001"  > /dev/null
+
+
+
+
+echo "SIMULATIONSIMULATION --- udp-800-0.1875" 
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=800 --dspktinterval=0.064 --uspktinterval=0.256 --astoptime=10000 --sstoptime=10001"  > /dev/null
+
+echo "SIMULATIONSIMULATION --- udp-800-0.375" 
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=800 --dspktinterval=0.032 --uspktinterval=0.128 --astoptime=10000 --sstoptime=10001"  > /dev/null
+
+echo "SIMULATIONSIMULATION --- udp-800-0.75" 
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=800 --dspktinterval=0.016 --uspktinterval=0.064 --astoptime=10000 --sstoptime=10001"  > /dev/null
+
+echo "SIMULATIONSIMULATION --- udp-800-1.5" 
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=800 --dspktinterval=0.008 --uspktinterval=0.032 --astoptime=10000 --sstoptime=10001"  > /dev/null
+
+echo "SIMULATIONSIMULATION --- udp-800-3" 
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=800 --dspktinterval=0.004 --uspktinterval=0.016 --astoptime=10000 --sstoptime=10001"  > /dev/null
+
+echo "SIMULATIONSIMULATION --- udp-800-6" 
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=800 --dspktinterval=0.002 --uspktinterval=0.008 --astoptime=10000 --sstoptime=10001"  > /dev/null
+
+
+
+
+
+echo "SIMULATIONSIMULATION --- udp-1000-0.15" 
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=1000 --dspktinterval=0.08 --uspktinterval=0.32 --astoptime=10000 --sstoptime=10001"  > /dev/null
+
+echo "SIMULATIONSIMULATION --- udp-1000-0.3" 
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=1000 --dspktinterval=0.04 --uspktinterval=0.16 --astoptime=10000 --sstoptime=10001"  > /dev/null
+
+echo "SIMULATIONSIMULATION --- udp-1000-0.6" 
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=1000 --dspktinterval=0.02 --uspktinterval=0.08 --astoptime=10000 --sstoptime=10001"  > /dev/null
+
+echo "SIMULATIONSIMULATION --- udp-1000-1.2" 
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=1000 --dspktinterval=0.01 --uspktinterval=0.04 --astoptime=10000 --sstoptime=10001"  > /dev/null
+
+echo "SIMULATIONSIMULATION --- udp-1000-2.4" 
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=1000 --dspktinterval=0.005 --uspktinterval=0.02 --astoptime=10000 --sstoptime=10001"  > /dev/null
+
+echo "SIMULATIONSIMULATION --- udp-1000-4.8" 
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=1000 --dspktinterval=0.0025 --uspktinterval=0.01 --astoptime=10000 --sstoptime=10001"  > /dev/null
+
+
+
+
+
+echo "SIMULATIONSIMULATION --- udp-25-384"
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=25 --dspktinterval=0.00003125 --uspktinterval=0.000125 --astoptime=10000 --sstoptime=10001"  > /dev/null 
+
+echo "SIMULATIONSIMULATION --- udp-50-192"
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=50 --dspktinterval=0.0000625 --uspktinterval=0.00025 --astoptime=10000 --sstoptime=10001"  > /dev/null 
+
+echo "SIMULATIONSIMULATION --- udp-100-96"
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=100 --dspktinterval=0.000125 --uspktinterval=0.0005 --astoptime=10000 --sstoptime=10001"  > /dev/null 
+
+echo "SIMULATIONSIMULATION --- udp-200-48"
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=200 --dspktinterval=0.00025 --uspktinterval=0.001 --astoptime=10000 --sstoptime=10001"  > /dev/null 
+
+echo "SIMULATIONSIMULATION --- udp-400-24"
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=400 --dspktinterval=0.0005 --uspktinterval=0.002 --astoptime=10000 --sstoptime=10001"  > /dev/null 
+
+echo "SIMULATIONSIMULATION --- udp-800-12"
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=800 --dspktinterval=0.001 --uspktinterval=0.004 --astoptime=10000 --sstoptime=10001"  > /dev/null 
+
+echo "SIMULATIONSIMULATION --- udp-1000-9.6"
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=1000 --dspktinterval=0.00125 --uspktinterval=0.005 --astoptime=10000 --sstoptime=10001"  > /dev/null 
+
+

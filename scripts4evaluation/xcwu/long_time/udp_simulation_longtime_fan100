@@ -1,0 +1,42 @@
+echo "SIMULATIONSIMULATION" >simulation-time100.txt
+echo "udp-100-1.5" >>simulation-time100.txt
+date >>simulation-time100.txt
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=100 --dspktinterval=0.008 --uspktinterval=0.032 --astoptime=4000 --sstoptime=4001" >udp-100-1.5.txt
+date >>simulation-time100.txt
+
+echo "SIMULATIONSIMULATION" >>simulation-time100.txt
+echo "udp-100-3" >>simulation-time100.txt
+date >>simulation-time100.txt
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=100 --dspktinterval=0.004 --uspktinterval=0.016 --astoptime=4000 --sstoptime=4001" >udp-100-3.txt
+date >>simulation-time100.txt
+
+echo "SIMULATIONSIMULATION" >>simulation-time100.txt
+echo "udp-100-6" >>simulation-time100.txt
+date >>simulation-time100.txt
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=100 --dspktinterval=0.002 --uspktinterval=0.008 --astoptime=4000 --sstoptime=4001" >udp-100-6.txt
+date >>simulation-time100.txt
+
+echo "SIMULATIONSIMULATION" >>simulation-time100.txt
+echo "udp-100-12" >>simulation-time100.txt
+date >>simulation-time100.txt
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=100 --dspktinterval=0.001 --uspktinterval=0.004 --astoptime=4000 --sstoptime=4001" >udp-100-12.txt 
+date >>simulation-time100.txt
+
+echo "SIMULATIONSIMULATION" >>simulation-time100.txt
+echo "udp-100-24" >>simulation-time100.txt
+date >>simulation-time100.txt
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=100 --dspktinterval=0.0005 --uspktinterval=0.002 --astoptime=4000 --sstoptime=4001" >udp-100-24.txt 
+date >>simulation-time100.txt
+
+echo "SIMULATIONSIMULATION" >>simulation-time100.txt
+echo "udp-100-48" >>simulation-time100.txt
+date >>simulation-time100.txt
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=100 --dspktinterval=0.00025 --uspktinterval=0.001 --astoptime=4000 --sstoptime=4001" >udp-100-48.txt 
+date >>simulation-time100.txt
+
+echo "SIMULATIONSIMULATION" >>simulation-time100.txt
+echo "udp-100-96" >>simulation-time100.txt
+date >>simulation-time100.txt
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=100 --dspktinterval=0.000125 --uspktinterval=0.0005 --astoptime=4000 --sstoptime=4001" >udp-100-96.txt
+date >>simulation-time100.txt
+

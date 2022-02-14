@@ -1,0 +1,2 @@
+unlink /home/xiuchao/repos/ns-3-allinone/ns-3-dev/src/xgpon;
+ln -s /media/System/active/lrpon4ns3/trunk/xgpon  /home/xiuchao/repos/ns-3-allinone/ns-3-dev/src/xgpon

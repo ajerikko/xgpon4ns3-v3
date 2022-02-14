@@ -1,0 +1,2 @@
+unlink /home/xw2/ns-3-allinone/ns-3-dev/src/xgpon;
+ln -s /home/xw2/xgpon  /home/xw2/ns-3-allinone/ns-3-dev/src/xgpon

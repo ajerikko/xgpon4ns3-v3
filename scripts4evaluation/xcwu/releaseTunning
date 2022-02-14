@@ -1,0 +1,6 @@
+echo "SIMULATIONSIMULATION" >>simulation-time.txt
+echo "udp-1000-9.6" >>simulation-time.txt
+date >>simulation-time.txt
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=1000 --dspktinterval=0.00125 --uspktinterval=0.005" >udp-1000-9.6.txt
+date >>simulation-time.txt
+

@@ -1,0 +1,35 @@
+# -*- Mode: python; py-indent-offset: 4; indent-tabs-mode: nil; coding: utf-8; -*-
+
+def build(bld):
+    obj = bld.create_ns3_program('xgpon-example-two-onus-udp', ['xgpon', 'point-to-point', 'internet', 'applications'])
+    obj.source = 'xgpon-example-two-onus-udp.cc'
+    obj = bld.create_ns3_program('xgpon-example-two-onus-tcp', ['xgpon', 'point-to-point', 'internet', 'applications'])
+    obj.source = 'xgpon-example-two-onus-tcp.cc'
+
+
+    obj = bld.create_ns3_program('xgpon-animation-udp', ['xgpon', 'point-to-point', 'internet', 'applications', 'netanim'])
+    obj.source = 'xgpon-animation-udp.cc'
+
+    obj = bld.create_ns3_program('xgpon-animation-tcp', ['xgpon', 'point-to-point', 'internet', 'applications', 'netanim'])
+    obj.source = 'xgpon-animation-tcp.cc'
+
+
+
+    obj = bld.create_ns3_program('xgpon-simulation-speed-fan-udp', ['xgpon', 'point-to-point', 'internet', 'applications'])
+    obj.source = 'xgpon-simulation-speed-fan-udp.cc'
+
+    obj = bld.create_ns3_program('xgpon-simulation-speed-fan-tcp', ['xgpon', 'point-to-point', 'internet', 'applications'])
+    obj.source = 'xgpon-simulation-speed-fan-tcp.cc'
+
+
+
+
+    obj = bld.create_ns3_program('xgpon-simulation-speed-dumbbell-udp', ['xgpon', 'point-to-point', 'internet', 'applications'])
+    obj.source = 'xgpon-simulation-speed-dumbbell-udp.cc'
+
+    obj = bld.create_ns3_program('xgpon-simulation-speed-dumbbell-tcp', ['xgpon', 'point-to-point', 'internet', 'applications'])
+    obj.source = 'xgpon-simulation-speed-dumbbell-tcp.cc'
+
+    obj = bld.create_ns3_program('xgpon-example-multiple-onus-udp-giant-cbr', ['xgpon', 'point-to-point', 'internet', 'applications'])
+    obj.source = 'xgpon-example-multiple-onus-udp-giant-cbr.cc'
+

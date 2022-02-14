@@ -1,0 +1,18 @@
+cd /usr/home/ns3/ns-3-allinone/nsc
+./scons.py freebsd-9stable
+cd /usr/home/ns3/ns-3-allinone/ns-3-dev
+./waf --with-nsc=../nsc/freebsd-9stable configure
+./waf build -j2
+./waf --run="dumbbell --data-store=/home/ns3/experiment_data"
+~ns3/scripts/q_vs_time.sh /home/ns3/experiment_data/<data_dir>/bottleneck.qtrace
+~ns3/scripts/cwnd_vs_time.sh /home/ns3/experiment_data/<data_dir>/allnodes.siftr
+
+
+cd ns-allinone-3.19/bake
+./bake.py configure -e ns-allinone-3.19
+./bake.py check  # resolve missing dependencies
+./bake.py show   # resolve missing dependencies
+./bake.py download
+./bake.py build
+
+and it should build NSC, then ns-3.19 with support for NSC.

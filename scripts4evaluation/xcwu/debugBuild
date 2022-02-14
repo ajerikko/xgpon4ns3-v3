@@ -1,0 +1,1 @@
+./waf -d debug configure --enable-examples --enable-tests; ./waf

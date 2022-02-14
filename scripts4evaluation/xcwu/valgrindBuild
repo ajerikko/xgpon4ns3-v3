@@ -1,0 +1,6 @@
+./waf -d debug configure --disable-gtk --enable-examples --enable-tests; ./waf
+
+#./waf --valgrind --run first
+#./waf --command-template="valgrind [options] %s" --run ns-3-program-name
+#./waf --command-template="valgrind --leak-check=full --show-reachable=yes %s" --run main-propagation-loss
+#./waf --run xgpon-simulation-speed-dumbbell-udp  --command-template="valgrind --leak-check=full --show-reachable=yes %s  --onus=800 --dspktinterval=0.001 --uspktinterval=0.004 --astoptime=1000 --sstoptime=1001"

@@ -1,0 +1,7 @@
+./waf --run xgpon-simulation-speed-fan-udp  --command-template="gdb %s"
+
+set args --onus=1000 --dspktinterval=0.00125 --uspktinterval=0.005
+
+
+
+./waf --run xgpon-simulation-speed-fan-udp --onus=1000 --dspktinterval=0.00125 --uspktinterval=0.005

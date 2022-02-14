@@ -1,0 +1,90 @@
+echo "SIMULATIONSIMULATION" >simulation-time2550.txt
+echo "udp-25-6" >>simulation-time2550.txt
+date >>simulation-time2550.txt
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=25 --dspktinterval=0.002 --uspktinterval=0.008 --astoptime=4000 --sstoptime=4001" >udp-25-6.txt
+date >>simulation-time2550.txt
+
+echo "SIMULATIONSIMULATION" >>simulation-time2550.txt
+echo "udp-25-12" >>simulation-time2550.txt
+date >>simulation-time2550.txt
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=25 --dspktinterval=0.001 --uspktinterval=0.004 --astoptime=4000 --sstoptime=4001" >udp-25-12.txt
+date >>simulation-time2550.txt
+
+echo "SIMULATIONSIMULATION" >>simulation-time2550.txt
+echo "udp-25-24" >>simulation-time2550.txt
+date >>simulation-time2550.txt
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=25 --dspktinterval=0.0005 --uspktinterval=0.002 --astoptime=4000 --sstoptime=4001" >udp-25-24.txt
+date >>simulation-time2550.txt
+
+echo "SIMULATIONSIMULATION" >>simulation-time2550.txt
+echo "udp-25-48" >>simulation-time2550.txt
+date >>simulation-time2550.txt
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=25 --dspktinterval=0.00025 --uspktinterval=0.001 --astoptime=4000 --sstoptime=4001" >udp-25-48.txt
+date >>simulation-time2550.txt
+
+echo "SIMULATIONSIMULATION" >>simulation-time2550.txt
+echo "udp-25-96" >>simulation-time2550.txt
+date >>simulation-time2550.txt
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=25 --dspktinterval=0.000125 --uspktinterval=0.0005 --astoptime=4000 --sstoptime=4001" >udp-25-96.txt
+date >>simulation-time2550.txt
+
+echo "SIMULATIONSIMULATION" >>simulation-time2550.txt
+echo "udp-25-192" >>simulation-time2550.txt
+date >>simulation-time2550.txt
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=25 --dspktinterval=0.0000625 --uspktinterval=0.00025 --astoptime=4000 --sstoptime=4001" >udp-25-192.txt
+date >>simulation-time2550.txt
+
+echo "SIMULATIONSIMULATION" >>simulation-time2550.txt
+echo "udp-25-384" >>simulation-time2550.txt
+date >>simulation-time2550.txt
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=25 --dspktinterval=0.00003125 --uspktinterval=0.000125 --astoptime=4000 --sstoptime=4001" >udp-25-384.txt
+date >>simulation-time2550.txt
+
+
+
+
+
+
+
+
+echo "SIMULATIONSIMULATION" >>simulation-time2550.txt
+echo "udp-50-3" >>simulation-time2550.txt
+date >>simulation-time2550.txt
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=50 --dspktinterval=0.004 --uspktinterval=0.016 --astoptime=4000 --sstoptime=4001" >udp-50-3.txt
+date >>simulation-time2550.txt
+
+echo "SIMULATIONSIMULATION" >>simulation-time2550.txt
+echo "udp-50-6" >>simulation-time2550.txt
+date >>simulation-time2550.txt
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=50 --dspktinterval=0.002 --uspktinterval=0.008 --astoptime=4000 --sstoptime=4001" >udp-50-6.txt
+date >>simulation-time2550.txt
+
+echo "SIMULATIONSIMULATION" >>simulation-time2550.txt
+echo "udp-50-12" >>simulation-time2550.txt
+date >>simulation-time2550.txt
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=50 --dspktinterval=0.001 --uspktinterval=0.004 --astoptime=4000 --sstoptime=4001" >udp-50-12.txt
+date >>simulation-time2550.txt
+
+echo "SIMULATIONSIMULATION" >>simulation-time2550.txt
+echo "udp-50-24" >>simulation-time2550.txt
+date >>simulation-time2550.txt
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=50 --dspktinterval=0.0005 --uspktinterval=0.002 --astoptime=4000 --sstoptime=4001" >udp-50-24.txt
+date >>simulation-time2550.txt
+
+echo "SIMULATIONSIMULATION" >>simulation-time2550.txt
+echo "udp-50-48" >>simulation-time2550.txt
+date >>simulation-time2550.txt
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=50 --dspktinterval=0.00025 --uspktinterval=0.001 --astoptime=4000 --sstoptime=4001" >udp-50-48.txt
+date >>simulation-time2550.txt
+
+echo "SIMULATIONSIMULATION" >>simulation-time2550.txt
+echo "udp-50-96" >>simulation-time2550.txt
+date >>simulation-time2550.txt
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=50 --dspktinterval=0.000125 --uspktinterval=0.0005 --astoptime=4000 --sstoptime=4001" >udp-50-96.txt
+date >>simulation-time2550.txt
+
+echo "SIMULATIONSIMULATION" >>simulation-time2550.txt
+echo "udp-50-192" >>simulation-time2550.txt
+date >>simulation-time2550.txt
+./waf --run "xgpon-simulation-speed-fan-udp  --onus=50 --dspktinterval=0.0000625 --uspktinterval=0.00025 --astoptime=4000 --sstoptime=4001" >udp-50-192.txt
+date >>simulation-time2550.txt
