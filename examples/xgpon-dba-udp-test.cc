@@ -38,7 +38,8 @@
 * More details of this XG-PON module can be found at the reference:
 * Arokkiam, J. A., Alvarez, P., Wu, X., Brown, K. N., Sreenan, C. J., Ruffini, M., … Payne, D. (2017). Design, implementation, and evaluation of an XG-PON module for the ns-3 network simulator. SIMULATION, 93(5), 409–426. https://doi.org/10.1177/0037549716682093
 *
-* The XG-PON code can be downloaded at https://sourceforge.net/projects/xgpon4ns3/
+* The XG-PON code v1 and v2 can be downloaded at https://sourceforge.net/projects/xgpon4ns3/
+* The latest version (v3) of the code can be downloaded at https://github.com/ajerikko/xgpon4ns3-v3.git
 **************************************************************/
 
 #include <ctime>
