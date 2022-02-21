@@ -111,29 +111,11 @@ XgponOnuNetDevice::DoSend (const Ptr<Packet>& packet, const Address& dest, uint1
 
   Ipv4Header ipHeader;
   packet->PeekHeader(ipHeader);
-
-  //the below is an example how to use map the DSCP and TCONT type, so that parallel applications on multiple TCONT classess can be realised through XG-PON
-  //By default, a Best Effort application is run across XG-PON.
   
-	/* First, a user should set different DSCP values at the network layers for different application flows.
-	 * In the example code below, the mapping assumes there are four DSCP values as in 0x10, 0x20, 0x40 and 0x60, set at the network layer. 
-	 * Here, these four dscp values are assumed to be equivalent to the 1st, 2nd, 3rd and 4th TCONT types. 
-	 *
-	 *  uint8_t ipDscp = ipHeader.GetDscp(); 
-	   //std::cout << "dscp: " << std::hex << (uint16_t)ipDscp << std::dec << std::endl; //undo the >> 4 to see the correct dscp value
-	
-	    if (ipDscp == 0x00)
-		    m_tcontType = 1;
-	    else if (ipDscp == 0x20)
-		    m_tcontType = 2;
-	    else if (ipDscp == 0x40)
-		    m_tcontType = 3;
-	    else if (ipDscp == 0x60)
-		    m_tcontType = 4;
-	    else
-		    m_tcontType = 4; //Best Effort by default	
-	 */
-	 
+  m_tcontType = ipHeader.GetTos(); //tcont type is derived from the TOS field of the header; if a suitable value is set (1 to 4), the appropriate tcont type is used
+  NS_ASSERT_MSG(((m_tcontType <= 4) & (m_tcontType >= 1)), "A suitable TOS value (1-4) is not set for the traffic end points");
+
+  
   const Ptr<XgponConnectionSender>& conn=m_onuConnManager->FindUsConnByTcontType(m_tcontType); //changed from FindUsConnByAddress
   //std::cout << "nowat ONU Net Device, allocID: " << conn->GetAllocId() << std::endl;
   
