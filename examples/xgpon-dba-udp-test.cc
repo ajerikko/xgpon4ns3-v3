@@ -38,8 +38,7 @@
 * More details of this XG-PON module can be found at the reference:
 * Arokkiam, J. A., Alvarez, P., Wu, X., Brown, K. N., Sreenan, C. J., Ruffini, M., … Payne, D. (2017). Design, implementation, and evaluation of an XG-PON module for the ns-3 network simulator. SIMULATION, 93(5), 409–426. https://doi.org/10.1177/0037549716682093
 *
-* The XG-PON code v1 and v2 can be downloaded at https://sourceforge.net/projects/xgpon4ns3/
-* The latest version (v3) of the code can be downloaded at https://github.com/ajerikko/xgpon4ns3-v3.git
+* The XG-PON code can be downloaded at https://sourceforge.net/projects/xgpon4ns3/
 **************************************************************/
 
 #include <ctime>
@@ -73,7 +72,7 @@
 #define APP_STOP 10 // for total no of packets > (20 * 6x10^5)  
 #define SIM_STOP 12
 
-static uint16_t nOnus = 1; //defined in the global scope
+static uint16_t nOnus = 2; //defined in the global scope
 static uint64_t totalRxFromXgponBytes = 0;
   
 using namespace ns3;
@@ -132,7 +131,7 @@ main (int argc, char *argv[])
   uint32_t siValue=1;
 
   //DBA mechanism to be used for upstream bandwidth allocation
-  std::string xgponDba = "ns3::XgponOltDbaEngineXgiant"; 
+  std::string xgponDba = "ns3::XgponOltDbaEngineEbu"; 
   /*
    * DBA mechanisms that can be used are:
       ns3::XgponOltDbaEngineRoundRobin  
@@ -348,6 +347,7 @@ main (int argc, char *argv[])
   Ptr<XgponOltNetDevice> oltDevice = DynamicCast<XgponOltNetDevice, NetDevice> (xgponDevices.Get(0));
 		oltDevice->TraceConnectWithoutContext ("DeviceStatistics", MakeCallback(&DeviceStatisticsTrace));
 	//add xgem ports for user nodes connected to ONUs
+  int nTconts = 4;
   for(int i=0; i< nOnus; i++) 
   {
     xgponHelper.SetQosParametersAttribute ("FixedBandwidth", UintegerValue (fixedBw[i]) );
@@ -359,7 +359,7 @@ main (int argc, char *argv[])
     xgponHelper.SetQosParametersAttribute ("MinServiceInterval", UintegerValue (siMin[i]));
 		
 		//only tconts 2-4 are here.
-    for (int tcont=0; tcont<4; tcont++)
+    for (int tcont=0; tcont< nTconts; tcont++)
     {
       Address addr = p2pLastmileInterfaces[i].GetAddress(1);
       Ptr<XgponOnuNetDevice> onuDevice = DynamicCast<XgponOnuNetDevice, NetDevice> (xgponDevices.Get(i+1));
@@ -385,52 +385,55 @@ main (int argc, char *argv[])
   //POPULATE ROUTING TABLE
   Ipv4GlobalRoutingHelper::PopulateRoutingTables ();
 
-  //SET-UP APP SINKS AT THE RECEIVERS FOR DATA RX
-  uint16_t serverPort = 9000; //9002-9004, for tcont2,3,4
-  PacketSinkHelper sinkHelper ("ns3::UdpSocketFactory", InetSocketAddress (Ipv4Address::GetAny (), serverPort));
-  ApplicationContainer sinkApp = sinkHelper.Install (serverNodes);
-  sinkApp.Start (Seconds (0.001));
-  sinkApp.Stop (Seconds (APP_STOP + 0.1));
-
-  //SET-UP APP SOURCES AT THE TRANSMITTTER
-  /* IN THIS CASE THE USER NODE TRANSMITS CONTINUOUS AND DETERMINISTIC TRAFFIC AND THE SERVER NODE RECEIVES, FOR UPSTREAM TRAFFIC
-   * FOR DOWNSTREAM TRAFFIC, SERVER NODE SHOULD TRANSMIT AND USER NODE SHOULD RECEIVE
-   *
-   * Note that the output from DeviceStatisticsTrace will show only traffic upstream in T4 TCONT type. 
-   * This is because there is a fixed TCONT (T4) TYPE used for the connection in xgpon-onu-net-device.cc.
-   * In order to SEE data traffic across all four TCONT TYPES
-   * 1. Create four (UDP) flows with different serverPort, in this example file
-   * 2. In file /src/internet/module/udp-socket-impl.cc, map the four serverPort (assuming serverPort values 9001, 9002, 9003 and 9004) to four different DSCP Values (assuming DSCP values 0x00, 0x20, 0x40, and 0x60). An example code is given below:
-    
-      uint8_t dscpVal=0x00;
-		
-			if (port == 9001)
-				dscpVal = 0x00; //DSCP_CS1
-			else if (port == 9002)
-				dscpVal = 0x20; //DSCP_CS1
-			else if (port == 9003)
-				dscpVal = 0x40; //DSCP_CS2
-			else if (port == 9004)
-				dscpVal = 0x60; //DSCP_CS3
-	
-			SocketIpTosTag lteTosTag;
-			lteTosTag.SetTos(dscpVal);
-			p->AddPacketTag (lteTosTag);
-		
-	 * 3. In file xgpon-onu-net-device.cc, enable the example code for converting DSCP to TCONT type.
-	 * 4. Now you can see DeviceStatisticsTrace showing traffic in all four TCONT types
-	 */ 
-  for(int i=0; i<nOnus; i++)
-  {
-    OnOffHelper onOff ("ns3::UdpSocketFactory", InetSocketAddress (p2pCoreInterfaces[i].GetAddress (0), serverPort));
-    onOff.SetAttribute ("OffTime",  StringValue ("ns3::ConstantRandomVariable[Constant=0]"));
-    onOff.SetAttribute ("OnTime",  StringValue ("ns3::ConstantRandomVariable[Constant=1]"));
-    onOff.SetAttribute ("DataRate", DataRateValue(DataRate(perAppDataRateString.str())));
-    onOff.SetAttribute ("PacketSize", UintegerValue(1447));
-    onOff.SetAttribute ("MaxBytes", UintegerValue(0));
-    ApplicationContainer userApp = onOff.Install (userNodes.Get (i));
-    userApp.Start (Seconds (0.002));
-    userApp.Stop (Seconds (APP_STOP));
+  //IF RR DBA IS ENABLED, ONLY BEST EFFORT TRAFFIC IS GENERATED WITH TCONT TYPE T4
+  //IF A QOS-BASED DBA IS USED, THEN TRAFFIC FOR TCONT TYPES T2, T3 AND T4 ARE GENERATED 
+  if(xgponDba == "ns3::XgponOltDbaEngineEbu"){
+    int serverPort;
+    for (int i=0; i<nOnus; i++){
+      serverPort = 9000; //9002-9004, for tcont2,3,4
+      PacketSinkHelper sinkHelper ("ns3::UdpSocketFactory", InetSocketAddress (Ipv4Address::GetAny (), serverPort));
+      ApplicationContainer sinkApp = sinkHelper.Install (serverNodes.Get(i));
+      sinkApp.Start (Seconds (0.001));
+      sinkApp.Stop (Seconds (APP_STOP + 0.1));
+      
+      InetSocketAddress addr = InetSocketAddress(p2pCoreInterfaces[i].GetAddress(0), serverPort);
+      addr.SetTos(4); //set the tos for tcont type T4
+      OnOffHelper onOff ("ns3::UdpSocketFactory", addr);
+      onOff.SetAttribute ("OffTime",  StringValue ("ns3::ConstantRandomVariable[Constant=0]"));
+      onOff.SetAttribute ("OnTime",  StringValue ("ns3::ConstantRandomVariable[Constant=1]"));
+      //onOff.SetAttribute ("DataRate", DataRateValue(DataRate(perAppDataRateString.str())));
+      onOff.SetAttribute("DataRate", StringValue("2000Mbps"));
+      onOff.SetAttribute ("PacketSize", UintegerValue(1447));
+      onOff.SetAttribute ("MaxBytes", UintegerValue(0));
+      ApplicationContainer userApp = onOff.Install (userNodes.Get (i));
+      userApp.Start (Seconds (0.002));
+      userApp.Stop (Seconds (APP_STOP));
+    }
+  } else{
+    int serverPort[nTconts];
+    for (int i=0; i<nOnus; i++){
+      for(int p = 0; p < nTconts; p++){
+        if(p == 0) continue;
+        serverPort[p] = 9001 + p; //9002-9004, for tcont2,3,4
+        PacketSinkHelper sinkHelper ("ns3::UdpSocketFactory", InetSocketAddress (Ipv4Address::GetAny (), serverPort[p]));
+        ApplicationContainer sinkApp = sinkHelper.Install (serverNodes.Get(i));
+        sinkApp.Start (Seconds (0.001));
+        sinkApp.Stop (Seconds (APP_STOP + 0.1));
+      
+        InetSocketAddress addr = InetSocketAddress(p2pCoreInterfaces[i].GetAddress(0), serverPort[p]);
+        addr.SetTos(p+1); //set the tcont type
+        OnOffHelper onOff ("ns3::UdpSocketFactory", addr);
+        onOff.SetAttribute ("OffTime",  StringValue ("ns3::ConstantRandomVariable[Constant=0]"));
+        onOff.SetAttribute ("OnTime",  StringValue ("ns3::ConstantRandomVariable[Constant=1]"));
+        //onOff.SetAttribute ("DataRate", DataRateValue(DataRate(perAppDataRateString.str())));
+        onOff.SetAttribute("DataRate", StringValue("10Mbps"));
+        onOff.SetAttribute ("PacketSize", UintegerValue(1447));
+        onOff.SetAttribute ("MaxBytes", UintegerValue(0));
+        ApplicationContainer userApp = onOff.Install (userNodes.Get (i));
+        userApp.Start (Seconds (0.002));
+        userApp.Stop (Seconds (APP_STOP));
+      }
+    }
   }
 
 
