@@ -17,7 +17,7 @@
  *
  * Authors: 
  * Xiuchao Wu <xw2@cs.ucc.ie>
- * Jerome A Arokkiam <jerom2005raj@gmail.com>
+ * Jerome A Arokkiam 
  */
 
 #include "ns3/log.h"

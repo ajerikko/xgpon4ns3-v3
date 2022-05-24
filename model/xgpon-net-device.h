@@ -15,6 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
+ * Author: Jerome Arokkiam  
  * Author: Xiuchao Wu <xw2@cs.ucc.ie>
  */
 
@@ -27,7 +28,7 @@
 #include "pon-net-device.h"
 #include "xgpon-phy.h"
 #include "xgpon-qos-parameters.h"
-
+#include "xgpon-channel.h" //ja:update:ns-3.35
 
 
 namespace ns3{
@@ -54,11 +55,12 @@ public:
 
 
   uint64_t m_rxFromUpperLayerBytes;
-  uint64_t m_rxFromXgponBytes[1024];
-        uint64_t m_rxT1FromXgponBytes[1024];
-        uint64_t m_rxT2FromXgponBytes[1024];
-        uint64_t m_rxT3FromXgponBytes[1024];
-        uint64_t m_rxT4FromXgponBytes[1024];
+  uint64_t m_usOltBytes[XgponChannel::MAXIMAL_NODES_PER_XGPON];//ja:update:ns-3.35 1024 replaced by a defined variable name
+        uint64_t m_usT1oltBytes[XgponChannel::MAXIMAL_NODES_PER_XGPON];
+        uint64_t m_usT2oltBytes[XgponChannel::MAXIMAL_NODES_PER_XGPON];
+        uint64_t m_usT3oltBytes[XgponChannel::MAXIMAL_NODES_PER_XGPON];
+        uint64_t m_usT4oltBytes[XgponChannel::MAXIMAL_NODES_PER_XGPON];
+  uint64_t m_dsOnuBytes; //ja:update:xgspon adding stats for downstream bytes at the ONU
 
   uint64_t m_passToUpperLayerBytes;
   uint64_t m_passToXgponBytes;
@@ -109,7 +111,7 @@ public:
    * \brief pass sdu to the upper layer. It will be called by XgemEngine after one SDU is received (and reassembed).
    * \param sdu the data received from the peer through xgpon channel
    */
-  void SendSduToUpperLayer (const Ptr<Packet>& sdu, uint16_t tcontType, uint16_t onuId);
+  void SendSduToUpperLayer (const Ptr<Packet>& sdu, uint16_t tcontType,  uint16_t senderId, uint16_t receiverId);//ja:update:ns-3.35, function and inputs modified
 
 
   /**
@@ -144,7 +146,6 @@ public:
    */
   const Ptr<XgponPhy>& GetXgponPhy ( ) const;
 
-  //jerome, C1
   void SetQosParameters (const Ptr<XgponQosParameters>& qosParameters);
   const Ptr<XgponQosParameters>& GetQosParameters () const;
 
@@ -161,7 +162,7 @@ protected:
 
   //Trace sources for the whole network device statistics
   TracedCallback<const XgponNetDeviceStatistics& > m_deviceStatisticsTrace;
-  Ptr<XgponQosParameters> m_qosParameters;  //jerome, C1, qos parameters associated with the net device
+  Ptr<XgponQosParameters> m_qosParameters;
 
 private:
   //process one packet from upper layers. Note that we cannot use the addresses in parameters since they are MAC-layer addresses.
@@ -209,7 +210,6 @@ XgponNetDevice::GetXgponPhy ( ) const
   return m_commonPhy;
 }
 
-//jerome, C1
 inline void 
 XgponNetDevice::SetQosParameters (const Ptr<XgponQosParameters>& qosParameters)
 {

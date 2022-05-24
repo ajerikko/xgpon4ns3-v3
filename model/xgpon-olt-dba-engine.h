@@ -220,7 +220,6 @@ private:
 
 protected:
   XgponOltDbaBursts m_bursts;      //bursts used to produce BWMAP
-  //jerome, C1
   uint32_t m_aggregateAllocatedSize;    //Used to maintain the total allocation for the minimum no of cycles. Tcont cycle is reset once this exceeded.
 
 private:

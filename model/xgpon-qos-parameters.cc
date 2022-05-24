@@ -54,7 +54,6 @@ XgponQosParameters::GetTypeId (void)
                    UintegerValue (0),
                    MakeUintegerAccessor (&XgponQosParameters::m_nonAssuredBw),
                    MakeUintegerChecker<uint32_t> ())
-     //jerome, C1
     .AddAttribute ("BestEffortBandwidth", 
                    "The non-assured bandwidth that is dynamically allocated to this connection.",
                    UintegerValue (0),
@@ -63,12 +62,12 @@ XgponQosParameters::GetTypeId (void)
 
     .AddAttribute ("MaxServiceInterval", 
                    "The maximal interval between the consecutive intervals os a connection. Unit: multiples of 125us",
-                   UintegerValue (100),    //jerome, C1, Unit: multiples of 125us
+                   UintegerValue (100),    //Unit: multiples of 125us
                    MakeUintegerAccessor (&XgponQosParameters::m_maxInterval),
                    MakeUintegerChecker<uint32_t> ())
     .AddAttribute ("MinServiceInterval",
                    "The minimum interval between the consecutive intervals of a connection. Unit: multiples of 125us",
-                   UintegerValue (100),    //jerome, C1, Unit: multiples of 125us
+                   UintegerValue (100),    //Unit: multiples of 125us
                    MakeUintegerAccessor (&XgponQosParameters::m_minInterval),
                    MakeUintegerChecker<uint32_t> ())
   ;
@@ -99,8 +98,8 @@ XgponQosParameters::~XgponQosParameters ()
 
 
 
-/* jerome, C1
- * Aggregiation doesnt have to be done a the qos parameters level.
+
+/* Aggregiation doesnt have to be done a the qos parameters level.
  * rather, it has to be done at the OLT, to get the aggregated parametes, to calculate the DBA parametes.
  * All we need here is a simple addition of all the assigned bw per device (ONU) to get the m_totBwPerOnu
  */
@@ -135,7 +134,6 @@ XgponQosParameters::AggregateQosParameters(const Ptr<XgponQosParameters>& qosPar
 }
 */
 
-//jerome, C1
 uint32_t
 XgponQosParameters::CalculateTotalBwPerOnu()
 {
@@ -153,8 +151,8 @@ XgponQosParameters::DeepCopy(const Ptr<XgponQosParameters>& qosParameters)
   m_fixedBw = qosParameters->GetFixedBw ();
   m_assuredBw = qosParameters->GetAssuredBw ();
   m_nonAssuredBw = qosParameters->GetNonAssuredBw ();
-  m_bestEffortBw = qosParameters->GetBestEffortBw ();//jerome, C1
-  m_totBwPerOnu = qosParameters->GetTotalBwPerOnu ();//jerome, C1
+  m_bestEffortBw = qosParameters->GetBestEffortBw ();
+  m_totBwPerOnu = qosParameters->GetTotalBwPerOnu ();
   m_maxInterval = qosParameters->GetMaxInterval ();
   m_minInterval = qosParameters->GetMinInterval ();
 }

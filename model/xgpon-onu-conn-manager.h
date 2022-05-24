@@ -79,7 +79,7 @@ public:
   const Ptr<XgponConnectionSender>& FindUsOmciConn ();
 
   /**
-   * \brief jerome, X2, find one upstream connection based on the tcont Type.  0: not found
+   * \brief find one upstream connection based on the tcont Type.  0: not found
    */
 	virtual const Ptr<XgponConnectionSender>& FindUsConnByTcontType (const uint16_t& type) = 0;
 

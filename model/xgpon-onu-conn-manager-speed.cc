@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * Author: Xiuchao Wu <xw2@cs.ucc.ie>
- * Author: Jerome Arokkiam <jerom2005raj@gmail.com>
+ * Author: Jerome Arokkiam
  */
 
 #include "ns3/log.h"
@@ -75,18 +75,16 @@ XgponOnuConnManagerSpeed::AddOneUsTcont (const Ptr<XgponTcontOnu>& tcont)
 
   uint16_t onuId = m_device->GetOnuId();
   uint16_t allocId = tcont->GetAllocId();
-  uint16_t index = ((allocId - onuId) / 1024) - 1; //jerome, X2
-  //jerome, X2
-  //std::cout << "index: " << index << std::endl;
+  uint16_t index = ((allocId - onuId) / 1024) - 1; 
   
-  //jerome, X2, to make sure only 16 allocIDs are possible in an ONU ID
+  //to make sure only 16 allocIDs are possible in an ONU ID
   //allocId = 1024*index + onuId
   NS_ASSERT_MSG((((allocId % 1024)==onuId) && (index<16)), "Unreasonable Alloc-ID for this ONU!!!");
 
   m_tconts[index] = tcont;
 }
 
-//jerome, X2, this is exactly the reverse of the AddOnueUsTcont function
+//this is exactly the reverse of the AddOnueUsTcont function
 const Ptr<XgponTcontOnu>& 
 XgponOnuConnManagerSpeed::GetTcontById (uint16_t allocId)
 {
@@ -96,7 +94,7 @@ XgponOnuConnManagerSpeed::GetTcontById (uint16_t allocId)
 
   if((allocId % 1024)!=onuId) return m_nullTcont;
   
-  uint16_t index = ((allocId - onuId) / 1024) - 1; //jerome, X2
+  uint16_t index = ((allocId - onuId) / 1024) - 1; 
   NS_ASSERT_MSG((index<16), "Unreasonable Alloc-ID for this ONU!!!");
 
   return m_tconts[index];
@@ -118,11 +116,9 @@ XgponOnuConnManagerSpeed::AddOneUsConn (const Ptr<XgponConnectionSender>& conn, 
     uint16_t onuId = m_device->GetOnuId();
 
     uint16_t index = (xgemPort - onuId) / 1024;
-    //jerome, X2
-		//std::cout << "allocId: " << allocId << ", onuId: " << onuId << ", index: " << allocId/1024 - 1 << std::endl;
 		
 		NS_ASSERT_MSG((((xgemPort % 1024)==onuId) && (index<64)), "Unreasonable XgemPort for this ONU!!!");
-    m_usConns[allocId/1024 - 1] = conn;   //jerome, X2 
+    m_usConns[allocId/1024 - 1] = conn;    
 
     if(conn->GetOnuId() == conn->GetXgemPort()) m_usOmciConn = conn;    
   }
@@ -138,8 +134,8 @@ XgponOnuConnManagerSpeed::FindUsConnByAddress (const Address& addr)
   Ipv4Address ipv4Addr = Ipv4Address::ConvertFrom (addr);
   uint32_t temp = ipv4Addr.Get();
   //uint16_t onuId = (temp >> (32 - m_onuNetmaskLen)) % 1024;
-  //uint16_t newOnuId = onuId / 256; //jerome, X1
-  uint16_t onuId = ((temp >> 16) % 1024)-512; //jerome, X1, this is to cater 14.x.x.x ip from eNB insted of default 12.x.x.x in onu client
+  //uint16_t newOnuId = onuId / 256; 
+  uint16_t onuId = ((temp >> 16) % 1024)-512; //this is to cater 14.x.x.x ip from eNB insted of default 12.x.x.x in onu client
   if(onuId != m_device->GetOnuId()) return m_nullConnSender;
 
   uint16_t index = temp & 0x0000003F;  
@@ -147,7 +143,6 @@ XgponOnuConnManagerSpeed::FindUsConnByAddress (const Address& addr)
   return m_usConns[index];
 }
 
-//jerome, X2
 const Ptr<XgponConnectionSender>& 
 XgponOnuConnManagerSpeed::FindUsConnByTcontType (const uint16_t& type)
 {

@@ -176,7 +176,6 @@ XgponOltXgemEngine::ProcessXgemFramesFromLowerLayer (std::vector<Ptr<XgponXgemFr
   const Ptr<XgponTcontOlt>& tcontOlt = connManager->GetTcontById(allocId);
   NS_ASSERT_MSG((tcontOlt!=0), "Cannot find the corresponding T-CONT at OLT-side!!!");
 
-  //jerome, C1
   const uint16_t tcontOltType = (uint16_t)tcontOlt->GetTcontType();
   NS_ASSERT_MSG((tcontOltType!=0), "Invalid TCONT Type when receiving data at OLT-side!!!");
 
@@ -209,8 +208,7 @@ XgponOltXgemEngine::ProcessXgemFramesFromLowerLayer (std::vector<Ptr<XgponXgemFr
         if(portId == onuId) { m_device->GetOmciEngine()->ReceiveOmciPacket(sdu); } //send to OMCI
         else 
           { 
-                //std::cout << "AllocID: " << allocId << ", T-CONT Type: " << tcontOltType << ", payload size: " << sdu->GetSize() << std::endl; //jerome, Apr 9
-                m_device->SendSduToUpperLayer (sdu, tcontOltType, onuId); 
+                m_device->SendSduToUpperLayer (sdu, tcontOltType, onuId, 1024);//ja:update:ns-3.35, 1024 is the OLT ID, which is the receiver ID here
            } //send to upper layers
       } //end for fragmentation state
     } //end for frame with data   

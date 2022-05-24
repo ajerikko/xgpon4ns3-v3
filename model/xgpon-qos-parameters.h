@@ -83,7 +83,6 @@ public:
   void SetNonAssuredBw (uint32_t bw);
   uint32_t GetNonAssuredBw () const;
 
-  //jerome, C1
   void SetBestEffortBw (uint32_t bw);
   uint32_t GetBestEffortBw () const;
 
@@ -106,13 +105,12 @@ private:
   uint32_t  m_fixedBw;         //the fixed bandwidth. Unit: Bps (Byte per second), 32 bit integer is large enough for 10Gbps
   uint32_t  m_assuredBw;       //the assured bandwidth.
   uint32_t  m_nonAssuredBw;    //the non-assured bandwidth.
-  uint32_t  m_bestEffortBw;    //the best effort bandwidth, jerome, C1
-  uint32_t  m_totBwPerOnu;     //the assigned total bandwidth per ONU, jerome, C1
+  uint32_t  m_bestEffortBw;    //the best effort bandwidth
+  uint32_t  m_totBwPerOnu;     //the assigned total bandwidth per ONU
   uint32_t  m_maxInterval;     //the maximal interval between consecutive service. Unit: multiples of 125us
   uint32_t  m_minInterval;     //the minimum interval between consecutive service. Unit: multiples of 125us
   /* more variables may be needed */
 
-  //jerome, C1
   uint32_t CalculateTotalBwPerOnu();
 
 };
@@ -170,7 +168,6 @@ XgponQosParameters::GetNonAssuredBw () const
   return m_nonAssuredBw;
 }
 
-//jerome, C1
 inline void 
 XgponQosParameters::SetBestEffortBw (uint32_t bw)
 {

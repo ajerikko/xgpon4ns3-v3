@@ -15,6 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
+ * Author: Jerome Arokkiam 
  * Author: Xiuchao Wu <xw2@cs.ucc.ie>
  */
 
@@ -134,15 +135,13 @@ XgponNetDevice::~XgponNetDevice ()
 {
 }
 
-
+//ja:update:ns-3.35, function and inputs modified
 void 
-XgponNetDevice::SendSduToUpperLayer (const Ptr<Packet>& sdu, uint16_t tcontType, uint16_t onuId)
+XgponNetDevice::SendSduToUpperLayer (const Ptr<Packet>& sdu, uint16_t tcontType, uint16_t senderId, uint16_t receiverId)
 {
   NS_LOG_FUNCTION(this);
 
-  //Ptr<Node> node = m_device->GetNode();
-  //uint16_t id = GetMtu();
-  //std::cout << "onuId: " << onuId << std::endl;
+  uint32_t sduSize = sdu->GetSize();
 
   uint16_t protocol=2048;
   Address from;
@@ -151,20 +150,25 @@ XgponNetDevice::SendSduToUpperLayer (const Ptr<Packet>& sdu, uint16_t tcontType,
   TraceForSniffers (sdu);
 
   ///////////statistics
-  //jerome, C1
-  if ( onuId != 1024 ) //jerome, Y1, onuId 1024 indicates OLT. max number of ONUs in XG-PON is 1024
+  //ja:update:xgspon senderId/receiverId == 1024 indicates OLT. The stats are collected at the receiver; so the sender is an OLT or an ONU
+  //if sender is an ONU, then the stats are collected within the corresponding tcont buckets for each onu
+  //if sender is the OLT, then the stats are collected within the correponding ONU's bucket
+  if ( senderId != 1024 )
     NS_ASSERT_MSG( ( (tcontType <=4) && (tcontType >=1) ), "Invalid TCONT type");
+
   if (tcontType == 1)
-	  m_stat.m_rxT1FromXgponBytes[onuId] += sdu->GetSize();
+    m_stat.m_usT1oltBytes[senderId] += sduSize;
   else if (tcontType == 2)
-	  m_stat.m_rxT2FromXgponBytes[onuId] += sdu->GetSize();
+    m_stat.m_usT2oltBytes[senderId] += sduSize;
   else if (tcontType == 3)
-    m_stat.m_rxT3FromXgponBytes[onuId] += sdu->GetSize();
-  else
-	  m_stat.m_rxT4FromXgponBytes[onuId] += sdu->GetSize();
+    m_stat.m_usT3oltBytes[senderId] += sduSize;
+  else if (tcontType == 4)
+    m_stat.m_usT4oltBytes[senderId] += sduSize;
 
-  m_stat.m_rxFromXgponBytes[onuId] += sdu->GetSize();
+  m_stat.m_dsOnuBytes += sduSize;
+  m_stat.m_usOltBytes[senderId] += sduSize;
 
+  //std::cout << "senderId: " << senderId << ", sduSize: " << sduSize << ", tcontType: " << tcontType << ", receiverId: " << receiverId << ", receivedBytesAtOnu: " << m_stat.m_dsOnuBytes << std::endl;
   m_rxCallback (this, sdu, protocol, from);
   return;
 }
@@ -246,14 +250,16 @@ XgponNetDeviceStatistics::initialize ()
 
 
     m_rxFromUpperLayerBytes = 0;
-    for (uint16_t i = 0; i < 1024; i++) 
-		{
-			m_rxFromXgponBytes[i] = 0;
-			m_rxT1FromXgponBytes[i] = 0;
-			m_rxT2FromXgponBytes[i] = 0;
-			m_rxT3FromXgponBytes[i] = 0;
-			m_rxT4FromXgponBytes[i] = 0;
-		}
+    m_dsOnuBytes = 0;
+    //ja:update:ns-3.35, new/modified parameters
+    for (uint16_t i = 0; i < XgponChannel::MAXIMAL_NODES_PER_XGPON; i++) 
+    {   
+      m_usOltBytes[i] = 0;
+      m_usT1oltBytes[i] = 0;
+      m_usT2oltBytes[i] = 0;
+      m_usT3oltBytes[i] = 0;
+      m_usT4oltBytes[i] = 0;
+    }   
 
     m_passToUpperLayerBytes = 0;
     m_passToXgponBytes = 0;

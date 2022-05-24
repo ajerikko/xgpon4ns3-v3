@@ -1,5 +1,0 @@
-unlink /home/xiuchao/ns-3-allinone/ns-3-dev/src/xgpon;
-ln -s /home/xiuchao/xgpon /home/xiuchao/ns-3-allinone/ns-3-dev/src/xgpon
-
-
-

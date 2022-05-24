@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * Author: Xiuchao Wu <xw2@cs.ucc.ie>
- * CoAuthor: Jerome A Arokkiam <jerom2005raj@gmail.com>
+ * Author: Jerome A Arokkiam
  */
 #include "ns3/log.h"
 #include "ns3/uinteger.h"

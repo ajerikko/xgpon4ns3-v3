@@ -26,7 +26,7 @@
 #include "xgpon-connection-sender.h"
 #include "xgpon-xgtc-dbru.h"
 #include "xgpon-xgtc-bw-allocation.h"
-#include "xgpon-qos-parameters.h" //jerome, C1
+#include "xgpon-qos-parameters.h" 
 
 namespace ns3 {
 

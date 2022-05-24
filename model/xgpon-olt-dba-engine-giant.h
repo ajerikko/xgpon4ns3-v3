@@ -50,7 +50,7 @@ public:
   //void SetTimerStartValue(uint16_t allocId, XgponGiantBandwidthType type, uint32_t initialValue);
 
 
-  /**jerome, C1, function not required.
+  /**function not required.
     * \brief function is called in AllTConts served
     * \param
     
@@ -92,7 +92,7 @@ private:
   //Get the next tcont to be served, from all the exixting tcont list
   virtual const Ptr<XgponTcontOlt>& GetNextTcontOlt ( );
 
-  void UpdateTcontOltForNextCycle(); //jerome, C1
+  void UpdateTcontOltForNextCycle(); 
   virtual const Ptr<XgponTcontOlt>& GetCurrentTcontOlt ( );
 
   //Get the first tcont to be served, from all the existing tcont list
@@ -105,13 +105,12 @@ private:
   uint32_t GetAllocationBytesFromRateAndServiceInterval(uint32_t rate, uint16_t si);
 
   /*
-   * \jerome, C1, To set the minium service Interval in the entire XG-PON 
+   * To set the minium service Interval in the entire XG-PON 
    * so that aggregated allocation can be controlled to be 
    * less than m_minimumSI*usPhyFrameSize
    */
   void SetMinimumServiceInterval(uint16_t si);
   
-  //jerome, X3
   uint32_t GetDeficit(uint16_t index) const;
   
 private:
@@ -121,7 +120,6 @@ private:
   
   Ptr<XgponTcontOlt> m_nullTcont;      	// Pointer used to return a null T-CONT
 
-  //jerome, C1
   //temporary iterator which points to the next tcont to be served
   std::vector<Ptr<XgponTcontOlt> >::iterator  m_tcontIterator;
   //conditions to check if T3/T4 are already served
@@ -133,9 +131,9 @@ private:
   uint16_t  m_firstServedT4Index, m_lastServedT4Index;
   uint16_t  m_nextCycleTcontIndex;
   // used to check if all TCONTs are served, to break the loop in GenerateBwMap(), And to distinguish allocation of GIR/PIR in T3
-  bool m_stop, m_t3FirstRound, m_t4RoundStart; //jerome, X3, m_t4RoundStart is added
+  bool m_stop, m_t3FirstRound, m_t4RoundStart; 
   //to store the total requested allocation in words, from the view of a single frame
-  uint32_t m_nonBestEffortAllocationInWords, m_totalAllocationInWords, m_totDeficit, m_extraAlloc;//jerome, X3 
+  uint32_t m_nonBestEffortAllocationInWords, m_totalAllocationInWords, m_totDeficit, m_extraAlloc; 
   uint16_t m_totalNoOfTconts; 
   uint16_t m_minimumSI;
   uint16_t m_allocCycleCount; //used to keep a record of no of allocation cycles served, to update m_aggregateAllocatedSize

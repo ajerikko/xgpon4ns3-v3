@@ -107,7 +107,6 @@ XgponOnuConnManagerFlexible::FindUsConnByAddress (const Address& addr)
 }
 
 
-//jerome, X2, dummy implementation
 const Ptr<XgponConnectionSender>& 
 XgponOnuConnManagerFlexible::FindUsConnByTcontType (const uint16_t& type)
 {

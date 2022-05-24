@@ -72,7 +72,7 @@ public:
    */
   const Ptr<XgponTcontOlt>& GetTcontById (uint16_t allocId) const;
 
-  /* jerome, Apr 9
+  /*
    * \brief Find TcontOltType based on Alloc-ID (inline function). 0: unknown type
    */
   const XgponQosParameters::XgponTcontType GetTcontTypeById(uint16_t allocId) const;
@@ -163,7 +163,7 @@ private:
 
   ///////used to find T-CONT, and their types quickly. CPU vs memory tradeoff. index == alloc-id
   std::vector< Ptr<XgponTcontOlt> > m_tconts;
-  std::vector< XgponQosParameters::XgponTcontType > m_tcontsType; //jerome, Apr 9
+  std::vector< XgponQosParameters::XgponTcontType > m_tcontsType; 
 
   /* 
    * For scheduling the upstream connections, these Alloc-IDs should be organized according to their priorities.
@@ -200,7 +200,6 @@ XgponOltConnManager::GetTcontById (uint16_t allocId) const
   return m_tconts[allocId];
 }
 
-//jerome, Apr 9
 inline const XgponQosParameters::XgponTcontType
 XgponOltConnManager::GetTcontTypeById(uint16_t allocId) const
 {

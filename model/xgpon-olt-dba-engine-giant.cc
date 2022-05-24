@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * Authors: Jerome A Arokkiam <jerom2005raj@gmail.com> 
+ * Authors: Jerome A Arokkiam  
  * Giant in codes is the refined Giant for XG-PON. This is the XGIANT in the below reference:
  * J. A. Arokkiam, K. N. Brown and C. J. Sreenan, "Refining the GIANT dynamic bandwidth allocation mechanism for XG-PON," 2015 IEEE International Conference on Communications (ICC), London, 2015, pp. 1006-1011. doi: 10.1109/ICC.2015.7248454
  *

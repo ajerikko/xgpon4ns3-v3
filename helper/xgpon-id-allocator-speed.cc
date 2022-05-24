@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * Author: Xiuchao Wu <xw2@cs.ucc.ie>
- * Co-author: Jerome A arokkiam <jerom2005raj@gmail.com>
+ * Author: Jerome Arokkiam
  */
 #include "ns3/assert.h"
 
@@ -65,7 +65,9 @@ XgponIdAllocatorSpeed::GetOneNewUpstreamPortId (uint16_t onuId, const Address& a
 
   uint16_t next2Assign = m_nextAllocIds[onuId];
   NS_ASSERT_MSG((next2Assign<16), "Too many Alloc-IDs are added per ONU.");
-  return onuId + next2Assign*1024;
+  m_nextAllocIds[onuId] = m_nextAllocIds[onuId] + 1;
+  //std::cout << "UPSTREAM addr: " << addr << ", temp: " << temp << ", onuIdInAddr: " << onuIdInAddr << ", next2Assign: " << next2Assign << ", m_onuNetmaskLen: " << m_onuNetmaskLen << std::endl;
+  return onuId + (next2Assign)*1024; //ja:update:ns-3.35 redefining the portIds and allocIds
 
 }
 
@@ -91,9 +93,10 @@ XgponIdAllocatorSpeed::GetOneNewDownstreamPortId (uint16_t onuId, const Address&
     NS_ASSERT_MSG((onuId == onuIdInAddr), "Strange Address!!!!");
 
     uint16_t next2Assign = m_nextAllocIds[onuId];
-
-    NS_ASSERT_MSG((next2Assign<16), "Too many Alloc-IDs are added per ONU.");
-    m_nextAllocIds[onuId] = m_nextAllocIds[onuId] + 1;
+    //ja:update:ns-3.35 removing the change to the next allocId at downstream, rather moving to that in the upstream
+//    NS_ASSERT_MSG((next2Assign<16), "Too many Alloc-IDs are added per ONU.");
+//    m_nextAllocIds[onuId] = m_nextAllocIds[onuId] + 1;
+    //std::cout << "DOWNSTREAM addr: " << addr << ", temp: " << temp << ", onuIdInAddr: " << onuIdInAddr << ", next2Assign: " << next2Assign << ", m_onuNetmaskLen: " << m_onuNetmaskLen << std::endl;
     return onuId + next2Assign*1024;
   }
 }

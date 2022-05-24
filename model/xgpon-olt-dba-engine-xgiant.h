@@ -15,7 +15,7 @@
 * along with this program; if not, write to the Free Software
 * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 *
-* Authors: Jerome Arokkiam <jerom2005raj@gmail.com>
+* Authors: Jerome Arokkiam
 * Xgiant here is Giant + intraTcontFairness. (this is the XGIANT in the XG-PON+LTE conference paper)
 * Giant in codes is the refined Giant for XG-PON (this is the XGIANT in the conference paper titled, 'Refining the GIANT dynamic bandwidth allocation mechanism for XG-PON')
 */
@@ -69,7 +69,7 @@ private:
   //Get the next tcont to be served, from all the exixting tcont list
   virtual const Ptr<XgponTcontOlt>& GetNextTcontOlt ( );
 
-  void UpdateTcontOltForNextCycle(); //jerome, C1
+  void UpdateTcontOltForNextCycle(); 
   const Ptr<XgponTcontOlt>& GetCurrentTcontOlt ( );
 
 	//Get the first tcont to be served, from all the existing tcont list
@@ -82,7 +82,7 @@ private:
   uint32_t GetAllocationBytesFromRateAndServiceInterval(uint32_t rate, uint16_t si);
 
   /*
-   * \jerome, C1, To set the minium service Interval in the entire XG-PON 
+   * To set the minium service Interval in the entire XG-PON 
    * so that aggregated allocation can be controlled to be 
    * less than m_minimumSI*usPhyFrameSize
    */
@@ -93,7 +93,6 @@ private:
   std::vector< Ptr<XgponTcontOlt> > m_usAllTcons;
   Ptr<XgponTcontOlt> m_nullTcont;      	// Pointer used to return a null T-CONT
 
-  //jerome, C1
   //temporary iterator which points to the next tcont to be served
   std::vector<Ptr<XgponTcontOlt> >::iterator  m_tcontIterator;
   //conditions to check if T3/T4 are already served

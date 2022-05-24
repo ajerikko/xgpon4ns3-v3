@@ -26,7 +26,7 @@
 
 #include "xgpon-tcont-olt.h"
 #include "xgpon-net-device.h"
-#include "xgpon-qos-parameters.h" //jerome, C1
+#include "xgpon-qos-parameters.h"
 
 
 NS_LOG_COMPONENT_DEFINE ("XgponTcontOlt");

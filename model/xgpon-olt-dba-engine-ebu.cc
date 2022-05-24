@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * Authors: Jerome A Arokkiam <jerome.arokkiam@insight-centre.org> 
+ * Authors: Jerome Arokkiam  
  */
 
  //brought from xgpon-olt-dba-engine-ebu.cc from 4c server, copied into ebu and modified as per EBU algorithm

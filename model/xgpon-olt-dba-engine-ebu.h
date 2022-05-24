@@ -15,7 +15,7 @@
 * along with this program; if not, write to the Free Software
 * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 *
-* Authors: Jerome A Arokkiam <jerome.arokkiam@insight-centre.org> 
+* Authors: Jerome A Arokkiam  
 */
 
  //brought from xgpon-olt-dba-engine-ebu.cc from 4c server, copied into ebu and modified as per EBU algorithm
@@ -51,7 +51,7 @@ public:
   //void SetTimerStartValue(uint16_t allocId, XgponEbuBandwidthType type, uint32_t initialValue);
 
 
-  /**jerome, C1, function not required.
+  /** function not required.
     * \brief function is called in AllTConts served
     * \param
     
@@ -93,7 +93,7 @@ private:
   //Get the next tcont to be served, from all the exixting tcont list
   virtual const Ptr<XgponTcontOlt>& GetNextTcontOlt ( );
 
-  void UpdateTcontOltForNextCycle(); //jerome, C1
+  void UpdateTcontOltForNextCycle(); 
   virtual const Ptr<XgponTcontOlt>& GetCurrentTcontOlt ( );
 
   //Get the first tcont to be served, from all the existing tcont list
@@ -106,7 +106,7 @@ private:
   uint32_t GetAllocationBytesFromRateAndServiceInterval(uint32_t rate, uint16_t si);
 
   /*
-   * \jerome, C1, To set the minium service Interval in the entire XG-PON 
+   * To set the minium service Interval in the entire XG-PON 
    * so that aggregated allocation can be controlled to be 
    * less than m_minimumSI*usPhyFrameSize
    */
@@ -117,7 +117,6 @@ private:
   std::vector< Ptr<XgponTcontOlt> > m_usAllTcons;
   Ptr<XgponTcontOlt> m_nullTcont;      	// Pointer used to return a null T-CONT
 
-  //jerome, C1
   //temporary iterator which points to the next tcont to be served
   std::vector<Ptr<XgponTcontOlt> >::iterator  m_tcontIterator;
   //conditions to check if T3/T4 are already served

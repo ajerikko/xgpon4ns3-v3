@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * Authors: Jerome A Arokkiam <jerom2005raj@gmail.com> 
+ * Authors: Jerome A Arokkiam 
  * XgiantDeficit is the deficit T4 version of Xgiant as in the below reference:
  * J. A. Arokkiam, K. N. Brown and C. J. Sreenan, "Optimised QoS-Aware DBA Mechanisms in XG-PON for Upstream Traffic in LTE Backhaul," 2016 IEEE 4th International Conference on Future Internet of Things and Cloud Workshops (FiCloudW), Vienna, 2016, pp. 361-368.
  */

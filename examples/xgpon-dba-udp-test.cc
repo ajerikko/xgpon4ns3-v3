@@ -21,8 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * Author: Xiuchao Wu <xw2@cs.ucc.ie>
- * CoAuthor: Jerome A Arokkiam <jerom2005raj@gmail.com>
+ * Author: Jerome A Arokkiam 
  */
 
 /**********************************************************************
@@ -35,10 +34,11 @@
 *  > MetroDevices (router + OLT)
 *  > LastmileDevices (ONU + userNode)
 *
-* More details of this XG-PON module can be found at the reference:
+* More details of the XG-PON module (equivalent to v2 of the code in sourceforge) can be found at the reference:
 * Arokkiam, J. A., Alvarez, P., Wu, X., Brown, K. N., Sreenan, C. J., Ruffini, M., … Payne, D. (2017). Design, implementation, and evaluation of an XG-PON module for the ns-3 network simulator. SIMULATION, 93(5), 409–426. https://doi.org/10.1177/0037549716682093
 *
-* The XG-PON code can be downloaded at https://sourceforge.net/projects/xgpon4ns3/
+* The latest version of the XG-PON code can be downloaded at https://github.com
+* The earlier versions (v2 and v2) of the XG-PON code can be downloaded at https://sourceforge.net/projects/xgpon4ns3/
 **************************************************************/
 
 #include <ctime>
@@ -72,8 +72,12 @@
 #define APP_STOP 10 // for total no of packets > (20 * 6x10^5)  
 #define SIM_STOP 12
 
-static uint16_t nOnus = 2; //defined in the global scope
-static uint64_t totalRxFromXgponBytes = 0;
+static const uint16_t nOnus = 2; //defined in the global scope
+static const uint32_t timeIntervalToPrint = 100000000; //this is every 100ms
+static uint64_t time2printOnu[nOnus] = {timeIntervalToPrint};
+static uint64_t time2printOlt = timeIntervalToPrint; //1,000,000,000 nanoseconds per second; so this prints the below logs every 100ms
+static uint16_t incrementingOnuId = 0;
+static uint64_t totalOnuReceivedBytes = 0;
   
 using namespace ns3;
 
@@ -87,29 +91,44 @@ TracePacketSinkRx (std::string context, uint64_t totalRxBytes, uint64_t milliSec
 }
 */
 
+//trace at the OLT for upstream
 void
 DeviceStatisticsTrace (const XgponNetDeviceStatistics& stat)
 {
-  static uint64_t time2print = 100000000;    //1,000,000,000 nanoseconds per second.
-  if(stat.m_currentTime > time2print)
+  if(stat.m_currentTime > time2printOlt)
   {
-	std::cout << "stat.m_currentTime: " << stat.m_currentTime << std::endl;
-	for(uint16_t i = 0; i < nOnus; i++)
-		{ 
-			totalRxFromXgponBytes += stat.m_rxFromXgponBytes[i]; 
-			std::cout << (stat.m_currentTime / 1000000L) << ",ms," 
-					<< "ONU," << i << ",total-Upstream," << stat.m_rxFromXgponBytes[i] << "," 
-					<< "alloc," << i+1024 << ",T1US," << stat.m_rxT1FromXgponBytes[i] << "," 
-					<< "alloc," << i+2048 << ",T2US," << stat.m_rxT2FromXgponBytes[i] << "," 
-					<< "alloc," << i+3072 << ",T3US," << stat.m_rxT3FromXgponBytes[i] << "," 
-					<< "alloc," << i+4096 << ",T4US," << stat.m_rxT4FromXgponBytes[i] << "," 
-					<< "Total-Xgpon-Upstream," << totalRxFromXgponBytes << ",(Bytes)" << std::endl;
-					
-		}
-		time2print += 100000000;
+    uint64_t totalRxFromXgponBytes = 0;
+    //std::cout << "stat.m_currentTime: " << stat.m_currentTime << std::endl;
+    for(uint16_t i = 0; i < nOnus; i++){ 
+      totalRxFromXgponBytes += stat.m_usOltBytes[i]; 
+      std::cout << (stat.m_currentTime / 1000000L) << ",ms," 
+          << "From ONU," << i << ",total-Upstream," << stat.m_usOltBytes[i] << "," 
+          << "alloc," << i+1024 << ",T1," << stat.m_usT1oltBytes[i] << "," 
+          << "alloc," << i+2048 << ",T2," << stat.m_usT2oltBytes[i] << "," 
+          << "alloc," << i+3072 << ",T3," << stat.m_usT3oltBytes[i] << "," 
+          << "alloc," << i+4096 << ",T4," << stat.m_usT4oltBytes[i] << "," << std::endl;
+    }   
+    std::cout << "\tTotal-ONU-Upstream," << totalRxFromXgponBytes << ",(Bytes)" << std::endl;
+    time2printOlt += 100000000;
   }
 }
 
+void
+DeviceStatisticsTraceOnu (const XgponNetDeviceStatistics& stat)
+{
+  if(stat.m_currentTime > time2printOnu[incrementingOnuId])
+  {
+    totalOnuReceivedBytes += stat.m_dsOnuBytes; 
+    std::cout << (stat.m_currentTime / 1000000L) << ",ms,ONU," << incrementingOnuId << ",total-downstream-thisOnu," << stat.m_dsOnuBytes << ",Bytes" << std::endl;
+    time2printOnu[incrementingOnuId] += 100000000;
+    incrementingOnuId++;
+    if(incrementingOnuId == nOnus){
+      std::cout << (stat.m_currentTime / 1000000L) << ",ms,total-downstream-allOnus," << totalOnuReceivedBytes << std::endl;
+      totalOnuReceivedBytes = 0;
+      incrementingOnuId = 0;
+    }
+  }
+}
 
 int 
 main (int argc, char *argv[])
@@ -117,22 +136,10 @@ main (int argc, char *argv[])
 
   /////////////////////////////////////SETTING DYNAMIC PARAMETERS FOR THE OVERALL SIMULATION
   //these are example values that may need to be changed often, and may impact multiple configuration locations in this example file. 
-  
-  //p2p delay beween diffent network segments used in this example. This is not the XG-PON OLT-ONU delay. For setting the XG-PON propagation dealy, one should look at xgpon-channel.h 
-  std::string p2pDelay = "1ms"; 
-  
-  //queue size for the net devices used in this example. Per AllocID Queues needs to be set at xgpon-queue.cc
-  //uint16_t dtqSize=800; 
-  
-  //ratio of the load over the XG-PON against the XG-PON capacity. This is a useful parameter when running simulations for different network load
-  double load=1.5; 
-
-  //service interval for GIR. 
-  uint32_t siValue=1;
-
-  //DBA mechanism to be used for upstream bandwidth allocation
-  std::string xgponDba = "ns3::XgponOltDbaEngineEbu"; 
-  /*
+  std::string traffic_direction = "upstream"; //traffic direction: downstream/upstream; default is upstream
+  std::string upstream_dba = "RoundRobin"; //DBA to be used for upstream bandwidth allocation
+  //uint16_t dtqSize=800; //queue size for the net devices used in this example. Per AllocID Queues needs to be set at xgpon-queue.cc
+  /*  
    * DBA mechanisms that can be used are:
       ns3::XgponOltDbaEngineRoundRobin  
       ns3::XgponOltDbaEngineGiant
@@ -150,11 +157,13 @@ main (int argc, char *argv[])
   
   CommandLine cmd;
   //COMMAND LINE OPTIONS FOR THE USER TO OVERRIDE THE DEFAULT OPTIONS ABOVE
-  //An example is given below. Additional values such as dtqSize, siValue, xgponDba, and any other, can be added using cmd.AddValue, if need be.
-  cmd.AddValue ("load", "Percentage of load for data through xg-pon (default 1.0)", load);
-  
+  cmd.AddValue ("traffic-direction", "The direction of the traffic flow in XGPON [downstream, upstream] (default upstream)", traffic_direction);
+  cmd.AddValue ("upstreamDBA", "DBA to be used for XGPON upstream; a simple RoundRobin is used for downstream [RoundRobin, Giant, Ebu, Xgiant, XgiantDeficit, XgiantProp] (default RoundRobin)", upstream_dba);
   cmd.Parse (argc, argv);
-  
+
+  std::string xgponDba = "ns3::XgponOltDbaEngine";
+  xgponDba.append(upstream_dba);
+
   ////////////////////////////////////////////////////////CONFIGURATIONS FOR QOS-AWARE DBAS ONLY
   
   /* 2.15 is the ideal max capacity, as the DBAoverhead(~4Mbps) + datarate(692Mbps) for T4 equals that of T2 and T3 datarates(696.7Mbps) individually. 
@@ -164,8 +173,10 @@ main (int argc, char *argv[])
    * Indirectly for Upstream however, DBA controlls how much payload goes into each Upstream frame. Hence one must take care in altering values set here when using QoS-aware DBAs. 
    * RoundRobin DBA is not affected by these values.
    */
-  double maxUSbandwidth = 2.15; //in Gbps
-  
+  double maxUSbandwidth = 2.3; //Capacity of XGPON in Gbps 2.3 for XGPON upstream, 9.9 for XGPON downstream 
+  double load=0; //ratio of the XGPON capacity that should be distributed to each application 
+  uint32_t siValue=1;//service interval for GIR. 
+ 
   std::vector<uint64_t> fixedBw(nOnus);
   std::vector<uint64_t> assuredBw(nOnus);
   std::vector<uint64_t> nonAssuredBw(nOnus);
@@ -263,6 +274,7 @@ main (int argc, char *argv[])
 
   //set the maximum no of packets in p2p tx queue
   //Config::SetDefault ("ns3::DropTailQueue::MaxPackets", UintegerValue(800));
+  std::string p2pDelay = "1ms"; //p2p delay beween diffent network segments used in this example. This is not the XG-PON OLT-ONU delay. For setting the XG-PON propagatio    n dealy, one should look at xgpon-channel.h
   pointToPoint.SetChannelAttribute ("Delay", StringValue (p2pDelay));
   pointToPoint.SetDeviceAttribute ("DataRate", StringValue(lastmilePerNodeP2PDataRateString.str()));
   //lastmile containers
@@ -344,99 +356,93 @@ main (int argc, char *argv[])
   }
 
   ////////////////////////////////////////////////////CONFIGURE THE XGPON WITH QOS CLASSES, UPSTREAM/DOWNSTREAM CONNECTIONS AND IP-ALLOCID-PORTID-TCONT MAPPINGS
-  Ptr<XgponOltNetDevice> oltDevice = DynamicCast<XgponOltNetDevice, NetDevice> (xgponDevices.Get(0));
-		oltDevice->TraceConnectWithoutContext ("DeviceStatistics", MakeCallback(&DeviceStatisticsTrace));
-	//add xgem ports for user nodes connected to ONUs
+	Ptr<XgponOltNetDevice> oltDevice = DynamicCast<XgponOltNetDevice, NetDevice> (xgponDevices.Get(0));
+  if(traffic_direction == "upstream"){
+    std::cout << "Connecting OLT to upstream statistics " << std::endl;
+    oltDevice->TraceConnectWithoutContext ("DeviceStatistics", MakeCallback(&DeviceStatisticsTrace));
+  }
+  //add xgem ports for user nodes connected to ONUs
+  //each onu-olt pair would have a single downstream port and multiple upstream ports depending on the no. of tconts (by default 4 tconts, hence 4 upstream ports)
   int nTconts = 4;
-  for(int i=0; i< nOnus; i++) 
+  for(int i=0; i< nOnus; i++)
   {
+    
+    Address addr = p2pLastmileInterfaces[i].GetAddress(1);
+    Ptr<XgponOnuNetDevice> onuDevice = DynamicCast<XgponOnuNetDevice, NetDevice> (xgponDevices.Get(i+1));
+      if(traffic_direction == "downstream"){
+        std::cout << "Connecting ONU " << i << " to device downstream statistics " << std::endl;
+        onuDevice->TraceConnectWithoutContext ("DeviceStatistics", MakeCallback(&DeviceStatisticsTraceOnu));
+      }
+    uint16_t downPortId = xgponHelper.AddOneDownstreamConnectionForOnu (onuDevice, oltDevice, addr);
     xgponHelper.SetQosParametersAttribute ("FixedBandwidth", UintegerValue (fixedBw[i]) );
     xgponHelper.SetQosParametersAttribute ("AssuredBandwidth", UintegerValue (assuredBw[i]) );
     xgponHelper.SetQosParametersAttribute ("NonAssuredBandwidth", UintegerValue(nonAssuredBw[i]) );
     xgponHelper.SetQosParametersAttribute ("BestEffortBandwidth", UintegerValue (bestEffortBw[i]) );
     xgponHelper.SetQosParametersAttribute ("MaxServiceInterval", UintegerValue (siMax[i]));
-    
     xgponHelper.SetQosParametersAttribute ("MinServiceInterval", UintegerValue (siMin[i]));
-		
-		//only tconts 2-4 are here.
-    for (int tcont=0; tcont< nTconts; tcont++)
+    
+    //tconts 1-4 are here.
+    for (uint8_t tcont=1; tcont<= nTconts; tcont++)
     {
-      Address addr = p2pLastmileInterfaces[i].GetAddress(1);
-      Ptr<XgponOnuNetDevice> onuDevice = DynamicCast<XgponOnuNetDevice, NetDevice> (xgponDevices.Get(i+1));
-
-      XgponQosParameters::XgponTcontType tcontType = static_cast<XgponQosParameters::XgponTcontType>(tcont+1);
+      
+      XgponQosParameters::XgponTcontType tcontType = static_cast<XgponQosParameters::XgponTcontType>(tcont);
       uint16_t allocId = xgponHelper.AddOneTcontForOnu (onuDevice, oltDevice, tcontType);
       uint16_t upPortId = xgponHelper.AddOneUpstreamConnectionForOnu (onuDevice, oltDevice, allocId, addr);
-      uint16_t downPortId = xgponHelper.AddOneDownstreamConnectionForOnu (onuDevice, oltDevice, addr); 
-
-      std::cout << "ONU-ID = "		<< onuDevice->GetOnuId() 
-			<< "\tALLOC-ID = " 	<< allocId 
-  		<< "\tUP-PORT-ID= " 	<< upPortId 
-  		<< "\tDOWN-PORT-ID = " 	<< downPortId
-			<< "\tTCONT-"		<< tcontType << std::endl;
-
-  
+      
+      std::cout << "\t\tUP/DOWNSTREAM ONU-ID = "    << onuDevice->GetOnuId()
+      << "\tALLOC-ID = "  << allocId 
+      << "\tUP-PORT-ID= "   << upPortId 
+      << "\tDOWN-PORT-ID = "  << downPortId
+      << "\tTCONT-"   << tcontType << std::endl;
+      
       allocIdList.push_back(allocId);
     }
   }
-    std::cout << std::endl;
+
+std::cout << std::endl;
     std::cout << "===========================================================================================" << std::endl;
 
   //POPULATE ROUTING TABLE
   Ipv4GlobalRoutingHelper::PopulateRoutingTables ();
 
   //IF RR DBA IS ENABLED, ONLY BEST EFFORT TRAFFIC IS GENERATED WITH TCONT TYPE T4
-  //IF A QOS-BASED DBA IS USED, THEN TRAFFIC FOR TCONT TYPES T2, T3 AND T4 ARE GENERATED 
-  if(xgponDba == "ns3::XgponOltDbaEngineEbu"){
-    int serverPort;
-    for (int i=0; i<nOnus; i++){
-      serverPort = 9000; //9002-9004, for tcont2,3,4
-      PacketSinkHelper sinkHelper ("ns3::UdpSocketFactory", InetSocketAddress (Ipv4Address::GetAny (), serverPort));
-      ApplicationContainer sinkApp = sinkHelper.Install (serverNodes.Get(i));
-      sinkApp.Start (Seconds (0.001));
+  //IF A QOS-BASED DBA IS USED, THEN TRAFFIC FOR TCONT TYPES T2, T3 AND T4 ARE GENERATED
+  int serverPort[nTconts];
+  for (int i=0; i<nOnus; i++){
+    int p = upstream_dba == "RoundRobin" ? 4 : 2; // if the DBA is RoundRobin, only one type of traffic is suffient; t1 traffic is skipped for its predictability 
+    for(; p <= nTconts; p++){
+      serverPort[p-1] = 9000 + p; //9002-9004, for tcont2,3,4
+      PacketSinkHelper sink ("ns3::UdpSocketFactory", InetSocketAddress (Ipv4Address::GetAny (), serverPort[p-1]));
+      ApplicationContainer sinkApp;
+      InetSocketAddress addr = InetSocketAddress(p2pCoreInterfaces[i].GetAddress(0), serverPort[p-1]);
+        if(traffic_direction == "upstream"){
+          sinkApp = sink.Install (serverNodes.Get(i));
+          addr = InetSocketAddress(p2pCoreInterfaces[i].GetAddress(0), serverPort[p-1]);
+        }else{
+          sinkApp = sink.Install (userNodes.Get(i));
+          addr = InetSocketAddress(p2pLastmileInterfaces[i].GetAddress(0), serverPort[p-1]);
+        }
+      sinkApp.Start (Seconds (0.000001));
       sinkApp.Stop (Seconds (APP_STOP + 0.1));
-      
-      InetSocketAddress addr = InetSocketAddress(p2pCoreInterfaces[i].GetAddress(0), serverPort);
-      addr.SetTos(4); //set the tos for tcont type T4
+
+      addr.SetTos(p);
+      std::cout << "setting tcontType: " << p << std::endl;
+
       OnOffHelper onOff ("ns3::UdpSocketFactory", addr);
       onOff.SetAttribute ("OffTime",  StringValue ("ns3::ConstantRandomVariable[Constant=0]"));
       onOff.SetAttribute ("OnTime",  StringValue ("ns3::ConstantRandomVariable[Constant=1]"));
       //onOff.SetAttribute ("DataRate", DataRateValue(DataRate(perAppDataRateString.str())));
-      onOff.SetAttribute("DataRate", StringValue("2000Mbps"));
+      onOff.SetAttribute ("DataRate", StringValue("2Gbps"));
       onOff.SetAttribute ("PacketSize", UintegerValue(1447));
       onOff.SetAttribute ("MaxBytes", UintegerValue(0));
-      ApplicationContainer userApp = onOff.Install (userNodes.Get (i));
-      userApp.Start (Seconds (0.002));
-      userApp.Stop (Seconds (APP_STOP));
-    }
-  } else{
-    int serverPort[nTconts];
-    for (int i=0; i<nOnus; i++){
-      for(int p = 0; p < nTconts; p++){
-        if(p == 0) continue;
-        serverPort[p] = 9001 + p; //9002-9004, for tcont2,3,4
-        PacketSinkHelper sinkHelper ("ns3::UdpSocketFactory", InetSocketAddress (Ipv4Address::GetAny (), serverPort[p]));
-        ApplicationContainer sinkApp = sinkHelper.Install (serverNodes.Get(i));
-        sinkApp.Start (Seconds (0.001));
-        sinkApp.Stop (Seconds (APP_STOP + 0.1));
-      
-        InetSocketAddress addr = InetSocketAddress(p2pCoreInterfaces[i].GetAddress(0), serverPort[p]);
-        addr.SetTos(p+1); //set the tcont type
-        OnOffHelper onOff ("ns3::UdpSocketFactory", addr);
-        onOff.SetAttribute ("OffTime",  StringValue ("ns3::ConstantRandomVariable[Constant=0]"));
-        onOff.SetAttribute ("OnTime",  StringValue ("ns3::ConstantRandomVariable[Constant=1]"));
-        //onOff.SetAttribute ("DataRate", DataRateValue(DataRate(perAppDataRateString.str())));
-        onOff.SetAttribute("DataRate", StringValue("10Mbps"));
-        onOff.SetAttribute ("PacketSize", UintegerValue(1447));
-        onOff.SetAttribute ("MaxBytes", UintegerValue(0));
-        ApplicationContainer userApp = onOff.Install (userNodes.Get (i));
-        userApp.Start (Seconds (0.002));
-        userApp.Stop (Seconds (APP_STOP));
-      }
+      ApplicationContainer sourceApp;
+        if(traffic_direction == "upstream"){sourceApp = onOff.Install (userNodes.Get(i));}
+        else{sourceApp = onOff.Install (serverNodes.Get(i));}
+      sourceApp.Start (Seconds (0.005));
+      sourceApp.Stop (Seconds (APP_STOP));
     }
   }
-
-
+ 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////
   //TRACING
   //pointToPoint.EnablePcap("p2p-user-pcap", userNodes);

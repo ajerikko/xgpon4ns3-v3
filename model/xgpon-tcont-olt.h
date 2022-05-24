@@ -135,14 +135,14 @@ public:
 private:
   //////////////////////////////////////////////////////Clear history
   uint64_t m_lastPollingTime;               //the time that the last polling grant is sent to this T-CONT.
-  uint32_t m_allocationWords;                     //jerome, A1, C1, unit: words, to store the allocation  bytes f each tcont
+  uint32_t m_allocationWords;               //unit: words, to store the allocation  bytes f each tcont
   uint32_t m_totalAllocatedRate;            //to store the toalBW requirement of all tconts.
   uint16_t m_pirTimer;                      //timers for PIR and GIR
   uint16_t m_girTimer;
   int32_t  m_variable_word;                 //unit: bytes, to store the remaining variable byte
   std::vector< Ptr<XgponConnectionReceiver> > m_connections;    //Connections of the same alloc-id. They should have the same T-CONT type
   Ptr<Packet> m_pkt4Reassemble;             //used to hold the packet to be reassembled (only one connection of the same T-CONT can be in reassemble mode). 
-  XgponQosParameters::XgponTcontType m_tcontType; //jerome, A1, C1, T-CONT type of the T-CONT
+  XgponQosParameters::XgponTcontType m_tcontType; //T-CONT type of the T-CONT
   
   
   //remove based on receive_time
@@ -236,7 +236,6 @@ XgponTcontOlt::GetGIRtimerValue ( ) const
 {
   return  m_girTimer;
 }
-//jerome, E1
 inline int32_t 
 XgponTcontOlt::GetVariableWord() const
 {

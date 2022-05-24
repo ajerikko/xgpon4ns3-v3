@@ -191,7 +191,6 @@ public:
    */
   void ResetStatistics (void);
 
-  //jerome, Apr 21
   void SetAllocId(uint16_t id);
   uint16_t GetAllocId(void) const;
 
@@ -227,7 +226,6 @@ protected:
   //segmentation related variables
   Ptr<Packet> m_remainingSegment;
 
-  //jerome, Apr 21
   std::vector<double> m_allPacket; // vector to store the index and time of the packet queued
   uint64_t m_packetIndex;          // indices for packet DoEnqueue and DoDequeue respectively
   uint16_t m_popIndex;             
@@ -261,7 +259,6 @@ private:
 
 
 /////////////////////////////////////////////INLINE Functions
-//jerome, Apr 21
 inline void
 XgponQueue::SetAllocId (uint16_t id)
 {

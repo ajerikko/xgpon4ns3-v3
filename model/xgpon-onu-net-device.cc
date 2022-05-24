@@ -112,9 +112,8 @@ XgponOnuNetDevice::DoSend (const Ptr<Packet>& packet, const Address& dest, uint1
   Ipv4Header ipHeader;
   packet->PeekHeader(ipHeader);
   
-  m_tcontType = ipHeader.GetTos(); //tcont type is derived from the TOS field of the header; if a suitable value is set (1 to 4), the appropriate tcont type is used
-  //TODO: NEED TO MODIFY THIS ASSERT_MSG FOR DOWNSTREAM AS WELL; IT WORKS FOR UPSTREAM, BUT IT DOESN'T FOR DOWNSTREAM; FIND OUT WHY AND CORRECT IT PLS
-  NS_ASSERT_MSG(((m_tcontType <= 4) & (m_tcontType >= 1)), "A suitable TOS value (1-4) is not set for the traffic end points");
+  m_tcontType = ipHeader.GetTos(); //tcont type is derived from the TOS field of the header; if a suitable value is set (0 to 4), the appropriate tcont type is used, ja:update:ns-3.35
+  NS_ASSERT_MSG(((m_tcontType <= 4) & (m_tcontType >= 0)), "A suitable TOS value (0-4) is not set for the traffic end points"); //ja:update:ns-3.35
 
   
   const Ptr<XgponConnectionSender>& conn=m_onuConnManager->FindUsConnByTcontType(m_tcontType); //changed from FindUsConnByAddress

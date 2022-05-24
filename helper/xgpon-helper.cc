@@ -322,7 +322,7 @@ XgponHelper::AddOneBroadcastDownstreamConnection (Ptr<XgponOltNetDevice> oltDevi
   connSender->SetUpperLayerAddr (addr);
   connSender->SetXgponQueue (txQueue);
 
-  oltDevice->SetQosParameters(qosParameters); //jerome
+  oltDevice->SetQosParameters(qosParameters);
   Ptr<XgponOltConnManager> connManager = oltDevice->GetConnManager ( );
   connManager->AddOneDsConn (connSender, true, 0);
 
@@ -334,7 +334,7 @@ XgponHelper::AddOneBroadcastDownstreamConnection (Ptr<XgponOltNetDevice> oltDevi
     Ptr<XgponOnuNetDevice> onuDevice = DynamicCast<XgponOnuNetDevice, PonNetDevice> (ch->GetOnuByIndex (i));
     Ptr<XgponQosParameters> qosParameters2 = m_qosParametersFactory.Create<ns3::XgponQosParameters> ( );
     qosParameters2->DeepCopy(qosParameters);    
-    onuDevice->SetQosParameters(qosParameters2); //jerome
+    onuDevice->SetQosParameters(qosParameters2);
 
     Ptr<XgponConnectionReceiver> connReceiver = CreateObject<XgponConnectionReceiver> ( );
     connReceiver->SetDirection (XgponConnection::DOWNSTREAM_CONN);
@@ -724,7 +724,6 @@ XgponHelper::AddOneUpstreamConnectionForOnu (Ptr<XgponOnuNetDevice> onuDevice, P
         txQueue->SetAllocId(allocId);
   Ptr<XgponQosParameters> qosParameters = m_qosParametersFactory.Create<ns3::XgponQosParameters> ( );
 
-  //jerome
   onuDevice->SetQosParameters (qosParameters);
   Ptr<XgponQosParameters> qosParameters2 = m_qosParametersFactory.Create<ns3::XgponQosParameters> ( );
   qosParameters2->DeepCopy(qosParameters);
@@ -765,7 +764,6 @@ XgponHelper::AddOneDownstreamConnectionForOnu (Ptr<XgponOnuNetDevice> onuDevice,
   Ptr<XgponQosParameters> qosParameters = m_qosParametersFactory.Create<ns3::XgponQosParameters> ( );
 
 
-  //jerome, C1
   onuDevice->SetQosParameters (qosParameters);
   Ptr<XgponQosParameters> qosParameters2 = m_qosParametersFactory.Create<ns3::XgponQosParameters> ( );
   qosParameters2->DeepCopy(qosParameters);

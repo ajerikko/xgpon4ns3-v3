@@ -69,7 +69,6 @@ XgponOnuXgemEngine::GenerateFramesToTransmit(std::vector<Ptr<XgponXgemFrame> >& 
 
   const Ptr<XgponOnuConnManager>& connManager = m_device->GetConnManager ( ); 
   const Ptr<XgponTcontOnu>& tcontOnu = connManager->GetTcontById (allocId);
-    //jerome, C1
     const uint16_t tcontOnuType = (uint16_t)tcontOnu->GetTcontType(); 
     NS_ASSERT_MSG((tcontOnuType!=0), "Invalid TCONT Type when sending data from ONU!!!");
   const Ptr<XgponOnuUsScheduler>& scheduler = tcontOnu->GetOnuUsScheduler();
@@ -159,12 +158,11 @@ XgponOnuXgemEngine::ProcessXgemFramesFromLowerLayer (std::vector<Ptr<XgponXgemFr
 
   const Ptr<XgponOnuConnManager>& connManager = m_device->GetConnManager ( ); 
 
-  //jerome, C1, TODO: need to bring allocId into this function to set the correct tcontOnuType
   //const Ptr<XgponTcontOnu>& tcontOnu = connManager->GetTcontById (allocId); 
   //NS_ASSERT_MSG((tcontOnu!=0), "Cannot find the corresponding T-CONT at OLT-side!!!");
   const uint16_t tcontOnuType = 0;//(uint16_t)tcontOnu->GetTcontType();
   //NS_ASSERT_MSG((tcontOnuType!=0), "Invalid TCONT Type when receiving data at OLT-side!!!");
-//const Ptr<XgponLinkInfo>& linkInfo = (m_device->GetPloamEngine ( ))->GetLinkInfo();
+  //const Ptr<XgponLinkInfo>& linkInfo = (m_device->GetPloamEngine ( ))->GetLinkInfo();
   //used to find the key for decryption
 
 
@@ -199,7 +197,7 @@ XgponOnuXgemEngine::ProcessXgemFramesFromLowerLayer (std::vector<Ptr<XgponXgemFr
         else  //send to upper layer
         {          
           if(portId == m_device->GetOnuId( )) { m_device->GetOmciEngine()->ReceiveOmciPacket(sdu); } //send to OMCI
-          else { m_device->SendSduToUpperLayer (sdu, tcontOnuType, 1024); } //send to upper layers          
+          else { m_device->SendSduToUpperLayer (sdu, tcontOnuType, 1024, m_device->GetOnuId()); } //send to upper layers, ja:update:ns-3.35          
         } //end for fragmentation state
       } //end for frames whose destination is this ONU   
     } //end for non-idle-frames

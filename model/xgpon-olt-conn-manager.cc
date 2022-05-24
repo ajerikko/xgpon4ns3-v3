@@ -51,7 +51,7 @@ XgponOltConnManager::XgponOltConnManager (): m_dsConnsPortIndex(65536,(Ptr<Xgpon
   m_broadcastConns(0), 
   m_onus(1024,(Ptr<XgponOltConnPerOnu>)0), 
   m_tconts(16384,(Ptr<XgponTcontOlt>)0), 
-  m_tcontsType(16384,(XgponQosParameters::XgponTcontType)0) //jerome, Apr 9
+  m_tcontsType(16384,(XgponQosParameters::XgponTcontType)0)
 {
 }
 XgponOltConnManager::~XgponOltConnManager ()
@@ -109,7 +109,6 @@ XgponOltConnManager::AddOneUsConn (const Ptr<XgponConnectionReceiver>& conn, uin
   NS_ASSERT_MSG((allocId<16384), "Alloc-ID is too large (unlawful)!!!");
 
   const Ptr<XgponTcontOlt>& tcont = GetTcontById (allocId);
-  //jerome, Apr 9
   Ptr<XgponQosParameters> qosParameters = tcont->GetQosParameters();
   m_tcontsType[allocId] = qosParameters->GetTcontType();
 
