@@ -1,5 +1,5 @@
 # -*- Mode: python; py-indent-offset: 4; indent-tabs-mode: nil; coding: utf-8; -*-
 
 def build(bld):
-    obj = bld.create_ns3_program('xgpon-dba-udp-test', ['xgpon', 'point-to-point', 'internet', 'applications'])
-    obj.source = 'xgpon-dba-udp-test.cc'
+    obj = bld.create_ns3_program('xgpon-dba-udp-example', ['xgpon', 'point-to-point', 'internet', 'applications'])
+    obj.source = 'xgpon-dba-udp-example.cc'

@@ -82,7 +82,7 @@ def build(bld):
         ]
 
     #module_test = bld.create_ns3_module_test_library('xgpon')
-    #module_test.source = [
+    #module_test.source = [ #no longer available for testing
     #    'test/xgpon-pool-allocation-test.cc',
     #    'test/xgpon-olt-dba-engine-giant-test.cc',
     #    ]
