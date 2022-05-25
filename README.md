@@ -1,7 +1,7 @@
 # xgpon4ns3-v3
 
 VERSION 3.0 
-RELEASE DATE 25.04.2022
+RELEASE DATE 25.05.2022
 RELEASED BY JEROME A AROKKIAM <jerom2005raj@gmail.com>
 
 This XG-PON module contains significant changes to v2.0 published a while ago. 
