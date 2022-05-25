@@ -5,7 +5,7 @@ RELEASE DATE 25.04.2022
 RELEASED BY JEROME A AROKKIAM <jerom2005raj@gmail.com>
 
 This XG-PON module contains significant changes to v2.0 published a while ago. 
-I've added comments where necessary, within the code, to indicate the changes (please beare with me as I've moved my repo from sourceforge to git and I've not figured out everything in git)
+I've added comments, within the files, to indicate the changes (please beare with me as I've moved my repo from sourceforge to git and I've not figured out everything in git)
 A summary of the changes are:
 1. Compatibility upgrade to C++17 (return types are more spectific in some cases)
   -unit32_t changed to std::size_t
