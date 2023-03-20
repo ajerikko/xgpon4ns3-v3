@@ -1,7 +1,7 @@
 # xgpon4ns3-v3
 
-VERSION 3.0 
-RELEASE DATE 25.05.2022
+VERSION 3.1 
+RELEASE DATE 20.03.2023
 RELEASED BY JEROME A AROKKIAM <jerom2005raj@gmail.com>
 ACKNOWLEDGMENTS: this work is partially a result of the CELTIC-NEXT project A5GARD (project ID C2019/2-8) 
 
