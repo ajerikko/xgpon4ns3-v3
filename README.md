@@ -3,6 +3,7 @@
 VERSION 3.0 
 RELEASE DATE 25.05.2022
 RELEASED BY JEROME A AROKKIAM <jerom2005raj@gmail.com>
+ACKNOWLEDGMENTS: this work is partially a result of the CELTIC-NEXT project A5GARD (project ID C2019/2-8) 
 
 This XG-PON module contains significant changes to v2.0 published a while ago. 
 I've added comments, within the files, to indicate the changes (please beare with me as I've moved my repo from sourceforge to git and I've not figured out everything in git)
